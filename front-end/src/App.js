@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import Review from './screens/Review';
-import Form from './screens/Form';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import Review from './components/Review';
+import Form from './containers/Form';
+import GetPoolsAction from './redux/actions/GetPoolsActions';
+import Navbar from './components/Navbar';
+
 
 class App extends Component {
   state = {
@@ -28,15 +31,7 @@ class App extends Component {
   }
 
   async handleSubmit() {
-    const url = `${window.apiHost}/getpools`;
-    await axios({
-      url,
-      method: 'POST',
-      data: this.state,
-    })
-    .catch((error) => {
-      alert(error);
-    });
+    await this.props.GetPoolsAction(this.state);
     this.setState({
       name: '',
       email: '',
@@ -53,10 +48,13 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Navbar />
         {this.getScreen()}
       </div>
     );
   }
 }
 
-export default App;
+export default connect(null, {
+  GetPoolsAction,
+})(App);
