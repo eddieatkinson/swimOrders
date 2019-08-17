@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Review from './screens/Review';
+import Form from './screens/Form';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    name: '',
+    email: '',
+    pool: '',
+    swimmer: '',
+    size: '',
+    signature: '',
+    agreeToTerms: '',
+    next: false,
+    submitted: false,
+  }
+
+  getScreen() {
+    const screen = this.state.next ? <Review handleSubmit={this.handleSubmit.bind(this)} /> : <Form handleReview={this.handleReview.bind(this)} />;
+    return screen;
+  }
+
+  handleReview() {
+    this.setState({
+      next: true,
+    });
+  }
+
+  async handleSubmit() {
+    const url = `${window.apiHost}/getpools`;
+    await axios({
+      url,
+      method: 'POST',
+      data: this.state,
+    })
+    .catch((error) => {
+      alert(error);
+    });
+    this.setState({
+      name: '',
+      email: '',
+      pool: '',
+      swimmer: '',
+      size: '',
+      signature: '',
+      agreeToTerms: '',
+      next: false,
+      submitted: false,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        {this.getScreen()}
+      </div>
+    );
+  }
 }
 
 export default App;
