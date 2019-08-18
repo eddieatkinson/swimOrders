@@ -1,8 +1,15 @@
+.top-fields-wrapper {
+  height: 180px;
+}
+
+.top-fields {
+  position: fixed;
+  width: 100%;
+  height: 140px;
+}
 
 /* Navbar */
 .navbar-container {
-  position: fixed;
-  width: 100%;
   background-color: #000;
   color: #F5CE24;
   text-align: center;
@@ -20,4 +27,9 @@
   font-size: 20px;
   font-family: 'Impact Header';
   padding-bottom: 10px;
+}
+
+.pool-swimmer-container {
+  height: 40px;
+  background-color: aqua;
 }
