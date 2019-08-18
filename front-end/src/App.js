@@ -4,6 +4,7 @@ import Review from './components/Review';
 import Form from './containers/Form';
 import GetPoolsAction from './redux/actions/GetPoolsActions';
 import Navbar from './components/Navbar';
+import PoolSwimmer from './containers/PoolSwimmer';
 
 
 class App extends Component {
@@ -48,7 +49,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <div className='top-fields-wrapper'>
+          <div className='top-fields'>
+            <Navbar />
+            <PoolSwimmer />
+          </div>
+        </div>
         {this.getScreen()}
       </div>
     );
