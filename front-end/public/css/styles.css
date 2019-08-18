@@ -1,0 +1,23 @@
+
+/* Navbar */
+.navbar-container {
+  position: fixed;
+  width: 100%;
+  background-color: #000;
+  color: #F5CE24;
+  text-align: center;
+}
+
+.navbar-container > img {
+  padding: 10px;
+  height: 90px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-text {
+  font-size: 20px;
+  font-family: 'Impact Header';
+  padding-bottom: 10px;
+}
