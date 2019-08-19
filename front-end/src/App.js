@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Review from './components/Review';
 import Form from './containers/Form';
-import GetPoolsAction from './redux/actions/GetPoolsActions';
+import GetPoolsAction from './redux/actions/GetPoolsAction';
 import Navbar from './components/Navbar';
 import PoolSwimmer from './containers/PoolSwimmer';
 
@@ -55,7 +55,7 @@ class App extends Component {
             <PoolSwimmer />
           </div>
         </div>
-        {this.getScreen()}
+        {/* {this.getScreen()} */}
       </div>
     );
   }

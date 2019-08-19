@@ -1,3 +1,8 @@
+.wrapper {
+  margin: auto;
+  width: 80%;
+}
+
 .top-fields-wrapper {
   height: 180px;
 }
@@ -30,6 +35,11 @@
 }
 
 .pool-swimmer-container {
-  height: 40px;
+  padding: 20px 0;
+  /* height: 100px; */
   background-color: aqua;
+}
+
+.pool-swimmer-content {
+  width: 60%;
 }
