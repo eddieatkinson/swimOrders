@@ -5,6 +5,7 @@ import { map } from 'lodash';
 
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
+import GetSizeAction from '../redux/actions/GetSizeAction';
 
 class PoolSwimmer extends Component {
   state = {
@@ -26,11 +27,13 @@ class PoolSwimmer extends Component {
 
   handleChange(field, id) {
     const { selectedIndex } = document.getElementById(id);
-    const pool = this.props[field+'s'][selectedIndex - 1];
+    const thingOfInterest = this.props[field+'s'][selectedIndex - 1];
     this.setState({
-      [field]: pool,
+      [field]: thingOfInterest,
     });
     field === 'pool' && this.props.GetSwimmersAction(selectedIndex);
+    console.log(thingOfInterest);
+    field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.sizeId);
   }
 
   getSwimmersDropdown() {
@@ -50,6 +53,7 @@ class PoolSwimmer extends Component {
 
   render() {
     const poolDropdownId = "exampleForm.ControlSelect1";
+    this.props.size[0] && console.log(this.props.size[0].size);
     return(
       <div className='pool-swimmer-container'>
         <Form className='wrapper pool-swimmer-content'>
@@ -70,10 +74,12 @@ const mapStateToProps = state => {
   return {
     pools: state.data.pools,
     swimmers: state.data.swimmers,
+    size: state.data.size,
   }
 }
 
 export default connect(mapStateToProps, {
   GetPoolsAction,
   GetSwimmersAction,
+  GetSizeAction,
 })(PoolSwimmer);
