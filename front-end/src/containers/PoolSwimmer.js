@@ -32,7 +32,6 @@ class PoolSwimmer extends Component {
       [field]: thingOfInterest,
     });
     field === 'pool' && this.props.GetSwimmersAction(selectedIndex);
-    console.log(thingOfInterest);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.sizeId);
   }
 
@@ -51,9 +50,14 @@ class PoolSwimmer extends Component {
     return swimmersDropdown;
   }
 
+  getSize() {
+    return (
+      <div>{this.props.size[0] && this.props.size[0].size}</div>
+    )
+  }
+
   render() {
     const poolDropdownId = "exampleForm.ControlSelect1";
-    this.props.size[0] && console.log(this.props.size[0].size);
     return(
       <div className='pool-swimmer-container'>
         <Form className='wrapper pool-swimmer-content'>
@@ -64,6 +68,7 @@ class PoolSwimmer extends Component {
             </Form.Control>
           </Form.Group>
           {this.getSwimmersDropdown()}
+          {this.getSize()}
         </Form>
       </div>
     );
