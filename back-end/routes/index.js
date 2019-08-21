@@ -40,4 +40,19 @@ router.get('/getswimmers/:poolId', (req, res) => {
   });
 });
 
+router.get('/getsize/:sizeId', (req, res) => {
+  console.log('Getting size...');
+  const { sizeId } = req.params;
+  const selectionQuery = `SELECT * FROM sizes
+    WHERE id = ?;`;
+  connection.query(selectionQuery, [sizeId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
 module.exports = router;
