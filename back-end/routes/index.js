@@ -70,7 +70,7 @@ router.get('/getsize/:sizeId', (req, res) => {
 router.post('/updatesize', (req, res) => {
   console.log('UPDATING SIZE...');
   console.log(req.body);
-  const { swimmerId, usedSizeId } = req.body;
+  const { usedSizeId, swimmerId } = req.body;
   const updateQuery = `UPDATE swimmers
     SET usedSizeId = ?
     WHERE id = ?`;

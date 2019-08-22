@@ -1,9 +1,9 @@
 import { UPDATE_SIZE_ACTION } from '../types';
 import axios from 'axios';
 
-export default function (input) {
+export default async function (input) {
   console.log('UPDATE_SIZE_ACTION is running!');
-  const axiosPromise = axios({
+  const axiosPromise = await axios({
     url: `${window.apiHost}/updatesize`,
     method: 'POST',
     data: input,
@@ -13,6 +13,6 @@ export default function (input) {
     });
   return {
     type: UPDATE_SIZE_ACTION,
-    payload: axiosPromise,
+    payload: axiosPromise.data,
   }
 }

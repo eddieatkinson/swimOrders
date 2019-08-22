@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import { map, findIndex } from 'lodash';
 
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
 import GetSizeAction from '../redux/actions/GetSizeAction';
+import UpdateSizeAction from '../redux/actions/UpdateSizeAction';
 
 class PoolSwimmer extends Component {
   state = {
@@ -16,6 +18,7 @@ class PoolSwimmer extends Component {
     size: null,
     showModal: false,
     sizeChangedTo: null,
+    disableModalSubmit: true,
   }
 
   componentDidMount() {
@@ -90,14 +93,31 @@ class PoolSwimmer extends Component {
   }
 
   handleSign(event) {
-    console.log(event.target.value);
+    if(event.target.value === this.state.swimmer.name) {
+      this.setState({
+        disableModalSubmit: false,
+      });
+    }
+  }
+
+  async handleSubmitNewSize() {
+    const sizeChangeInput = {
+      usedSizeId: this.state.size.id,
+      swimmerId: this.state.swimmer.id,
+    }
+    await this.props.UpdateSizeAction(sizeChangeInput);
+    if (this.props.successMessage && this.props.successMessage.msg === 'sizeUpdateSuccess') {
+      await this.handleClose();
+      this.props.GetSizeAction(this.state.size.id);
+      alert('You\'re swimmer\'s size has been successfully updated!');
+    } else {
+      alert('An error has occurred.');
+    }
   }
 
   getConfirmationSignature() {
     const selectedIndex = document.getElementById("exampleForm.ControlSelect3") && document.getElementById("exampleForm.ControlSelect3").selectedIndex;
-    console.log(selectedIndex);
-    console.log(findIndex(this.props.sizes, this.props.size[0]));
-    const confirmationSignature = selectedIndex && selectedIndex !== findIndex(this.props.sizes, this.props.size[0]) &&
+    const confirmationSignature = (selectedIndex || selectedIndex === 0) && selectedIndex !== findIndex(this.props.sizes, this.props.size[0]) &&
       <Form.Group>
         <Form.Control type='text' onChange={this.handleSign.bind(this)} />
         <Form.Text className="text-muted">
@@ -123,6 +143,10 @@ class PoolSwimmer extends Component {
             {this.getConfirmationSignature()}
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={this.handleClose.bind(this)}>Cancel</Button>
+          <Button disabled={this.state.disableModalSubmit} variant='primary' onClick={this.handleSubmitNewSize.bind(this)}>Submit</Button>
+        </Modal.Footer>
       </Modal>
     )
   }
@@ -154,6 +178,7 @@ const mapStateToProps = state => {
     swimmers: state.data.swimmers,
     sizes: state.data.sizes,
     size: state.data.size,
+    successMessage: state.data.successMessage,
   }
 }
 
@@ -162,4 +187,5 @@ export default connect(mapStateToProps, {
   GetSizesAction,
   GetSwimmersAction,
   GetSizeAction,
+  UpdateSizeAction,
 })(PoolSwimmer);
