@@ -25,6 +25,18 @@ router.get('/getpools', (req, res) => {
   });
 });
 
+router.get('/getsizes', (req, res) => {
+  console.log('Getting sizes...');
+  const selectionQuery = `SELECT * FROM sizes;`;
+  connection.query(selectionQuery, [], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 router.get('/getswimmers/:poolId', (req, res) => {
   console.log('Getting swimmers...');
   const { poolId } = req.params;
@@ -51,6 +63,24 @@ router.get('/getsize/:sizeId', (req, res) => {
     } else {
       console.log(results);
       res.json(results);
+    }
+  });
+});
+
+router.post('/updatesize', (req, res) => {
+  console.log('UPDATING SIZE...');
+  console.log(req.body);
+  const { swimmerId, usedSizeId } = req.body;
+  const updateQuery = `UPDATE swimmers
+    SET usedSizeId = ?
+    WHERE id = ?`;
+  connection.query(updateQuery, [usedSizeId, swimmerId], (error) => {
+    if (error) {
+      throw error;
+    } else {
+      res.json({
+        msg: 'sizeUpdateSuccess',
+      });
     }
   });
 });
