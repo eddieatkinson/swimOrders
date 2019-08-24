@@ -67,6 +67,19 @@ router.get('/getsize/:sizeId', (req, res) => {
   });
 });
 
+router.get('/getitems', (req, res) => {
+  console.log('Getting items...');
+  const selectionQuery = `SELECT * FROM items;`;
+  connection.query(selectionQuery, [], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
 router.post('/updatesize', (req, res) => {
   console.log('UPDATING SIZE...');
   console.log(req.body);
