@@ -5,6 +5,7 @@ import Form from './containers/Form';
 import GetPoolsAction from './redux/actions/GetPoolsAction';
 import Navbar from './components/Navbar';
 import PoolSwimmer from './containers/PoolSwimmer';
+import Merchandise from './containers/Merchandise';
 
 
 class App extends Component {
@@ -55,12 +56,20 @@ class App extends Component {
             <PoolSwimmer />
           </div>
         </div>
-        {/* {this.getScreen()} */}
+        <div className='merchandise-wrapper wrapper'>
+          {this.props.size[0] && <Merchandise />}
+        </div>
       </div>
     );
   }
 }
 
-export default connect(null, {
+const mapStateToProps = state => {
+  return {
+    size: state.data.size,
+  }
+}
+
+export default connect(mapStateToProps, {
   GetPoolsAction,
 })(App);
