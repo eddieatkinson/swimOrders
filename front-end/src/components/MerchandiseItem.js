@@ -131,6 +131,7 @@ const MerchandiseItem = (props) => {
     }
     props.amendOrder(newId, {
       ...props.order[newId],
+      id: newId,
       [field]: valueId,
     });
   }

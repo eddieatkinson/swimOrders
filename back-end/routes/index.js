@@ -7,6 +7,28 @@ const { db, mail } = config;
 const connection = mysql.createConnection(db);
 connection.connect();
 
+// Nodemailer
+const ejs = require('ejs');
+const nodemailer = require('nodemailer');
+
+const transport = {
+  host: 'smtp.gmail.com',
+  auth: {
+    user: mail.user,
+    pass: mail.pass,
+  },
+};
+
+const transporter = nodemailer.createTransport(transport);
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Server is ready to take messages');
+  }
+});
+
 /* GET home page. */
 router.get('/', function(req, res) {
   console.log('You hit "/"');
@@ -96,6 +118,11 @@ router.post('/updatesize', (req, res) => {
       });
     }
   });
+});
+
+router.post('/submitorder', (req, res) => {
+  console.log('SUBMITTING ORDER...');
+  
 });
 
 module.exports = router;

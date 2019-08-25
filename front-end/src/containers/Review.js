@@ -25,6 +25,9 @@ class Review extends Component {
   handleRestart() {
     this.props.RestartFormAction();
   }
+  handleSubmit() {
+    console.log(this.props.order);
+  }
   render() {
     const reviewItemsArray = this.getReviewItems();
     return (
@@ -38,7 +41,7 @@ class Review extends Component {
         </div>
         <div className='submit-button'>
           <Button onClick={this.handleRestart.bind(this)} variant='outline-primary'>Start Over</Button>
-          <Button type='submit'>Submit</Button>
+          <Button onClick={this.handleSubmit.bind(this)} type='submit'>Submit</Button>
         </div>
       </div>
     );
