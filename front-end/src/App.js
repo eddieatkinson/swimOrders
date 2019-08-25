@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Review from './components/Review';
+// import Review from './components/Review';
 import Form from './containers/Form';
 import GetPoolsAction from './redux/actions/GetPoolsAction';
 import Navbar from './components/Navbar';
 import PoolSwimmer from './containers/PoolSwimmer';
 import Merchandise from './containers/Merchandise';
+import Review from './containers/Review';
 
 
 class App extends Component {
@@ -48,6 +49,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.order);
     return (
       <div>
         <div className='top-fields-wrapper'>
@@ -57,7 +59,8 @@ class App extends Component {
           </div>
         </div>
         <div className='merchandise-wrapper wrapper'>
-          {this.props.size[0] && <Merchandise />}
+          {this.props.size[0] && !this.props.formComplete && <Merchandise />}
+          {this.props.formComplete && <Review />}
         </div>
       </div>
     );
@@ -67,6 +70,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     size: state.data.size,
+    formComplete: state.data.formComplete,
+    order: state.data.order,
   }
 }
 

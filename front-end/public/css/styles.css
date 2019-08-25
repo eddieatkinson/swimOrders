@@ -43,3 +43,55 @@
 .pool-swimmer-content {
   width: 60%;
 }
+
+/* Merchandise Items */
+.merchandise-item {
+  padding: 40px 0;
+  display: flex;
+  border-bottom: 1px solid gray;
+}
+
+.merchandise-pic {
+  flex: 2;
+  text-align: center;
+  padding: 10px;
+}
+
+.price-text {
+  font-size: 20px;
+  text-align: right;
+  transform: rotate(90deg);
+  transform-origin: left top 0;
+}
+
+.merchandise-pic img {
+  height: 200px;
+}
+
+.merchandise-name {
+  padding: 5px;
+  font-size: 20px;
+}
+
+.merchandise-else {
+  flex: 6;
+  padding: 100px;
+  text-align: center;
+  /* background-color: aquamarine; */
+}
+
+.merchandise-price {
+  flex: 2;
+  padding: 10px;
+}
+
+.submit-button {
+  text-align: center;
+  margin: 30px;
+}
+
+.submit-button button {
+  margin: 10px;
+}
+
+/* Review */

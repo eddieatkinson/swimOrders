@@ -5,3 +5,6 @@ export const GET_SIZES = 'GET_SIZES';
 export const GET_ITEMS = 'GET_ITEMS';
 
 export const UPDATE_SIZE_ACTION = 'UPDATE_SIZE_ACTION';
+
+export const SET_SWIMMER = 'SET_SWIMMER';
+export const COMPLETE_FORM = 'COMPLETE_FORM';

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { map, findIndex } from 'lodash';
+import { map, findIndex, find } from 'lodash';
 
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
 import GetSizeAction from '../redux/actions/GetSizeAction';
 import UpdateSizeAction from '../redux/actions/UpdateSizeAction';
+import SetSwimmerAction from '../redux/actions/SetSwimmerAction';
 
 class PoolSwimmer extends Component {
   state = {
@@ -30,21 +31,26 @@ class PoolSwimmer extends Component {
     const options = map(this.props[field], (item, i) => {
       const selected = field === 'sizes' && findIndex(this.props.sizes, this.props.size[0]) === i;
       return (
-        <option selected={selected} key={item.id}>{item.name}</option>
+        <option selected={selected} value={item.id} key={item.id}>{item.name}</option>
       )
     });
     return options;
   }
 
-  handleChange(field, id) {
-    const { selectedIndex } = document.getElementById(id);
-    const indexCorrection = field === 'size' ? 0 : -1
-    const thingOfInterest = this.props[field+'s'][selectedIndex + indexCorrection];
+  handleChange(event, field, id) {
+    const thingId = parseInt(event.target.value)
+    // const { selectedIndex } = document.getElementById(id);
+    // const indexCorrection = field === 'size' ? 0 : -1
+    // const thingOfInterest = this.props[field+'s'][selectedIndex + indexCorrection];
+    // console.log(this.props[field+'s']);
+    const thingOfInterest = find(this.props[field+'s'], ['id', thingId]);
+    // console.log(thingOfInterest);
     this.setState({
       [field]: thingOfInterest,
     });
-    field === 'pool' && this.props.GetSwimmersAction(selectedIndex);
+    field === 'pool' && this.props.GetSwimmersAction(thingId);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.usedSizeId);
+    field === 'swimmer' && this.props.SetSwimmerAction(thingOfInterest);
   }
 
   getSwimmersDropdown() {
@@ -52,7 +58,7 @@ class PoolSwimmer extends Component {
     const swimmersDropdown = this.state.pool &&
       <Form.Group controlId={id}>
         <Form.Label>Swimmer</Form.Label>
-        <Form.Control as="select" onChange={() => this.handleChange('swimmer', id)}>
+        <Form.Control as="select" onChange={(e) => this.handleChange(e, 'swimmer', id)}>
           <option>Select swimmer...</option>
           {this.getOptions('swimmers')}
         </Form.Control>
@@ -136,7 +142,7 @@ class PoolSwimmer extends Component {
         <Modal.Body>
           <Form className='wrapper pool-swimmer-content'>
             <Form.Group controlId="exampleForm.ControlSelect3">
-              <Form.Control as="select" onChange={() => this.handleChange('size', 'exampleForm.ControlSelect3')}>
+              <Form.Control as="select" onChange={(e) => this.handleChange(e, 'size', 'exampleForm.ControlSelect3')}>
                 {this.getOptions('sizes')}
               </Form.Control>
             </Form.Group>
@@ -158,7 +164,7 @@ class PoolSwimmer extends Component {
         <Form className='wrapper pool-swimmer-content'>
           <Form.Group controlId={poolDropdownId}>
             <Form.Label>Pool</Form.Label>
-            <Form.Control as="select" onChange={() => this.handleChange('pool', poolDropdownId)}>
+            <Form.Control as="select" onChange={(e) => this.handleChange(e, 'pool', poolDropdownId)}>
               <option selected disabled>Select pool...</option>
               {this.getOptions('pools')}
             </Form.Control>
@@ -176,6 +182,7 @@ const mapStateToProps = state => {
   return {
     pools: state.data.pools,
     swimmers: state.data.swimmers,
+    swimmer: state.data.swimmer,
     sizes: state.data.sizes,
     size: state.data.size,
     successMessage: state.data.successMessage,
@@ -188,4 +195,5 @@ export default connect(mapStateToProps, {
   GetSwimmersAction,
   GetSizeAction,
   UpdateSizeAction,
+  SetSwimmerAction,
 })(PoolSwimmer);
