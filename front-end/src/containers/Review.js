@@ -25,7 +25,7 @@ class Review extends Component {
           {map(reviewItemsArray, (item, i) => {
             console.log(item);
             return (
-              <ReviewItem key={i} itemId={item.id} orderInfo={item.order} name={item.name} size={item.size} />
+              <ReviewItem key={i} itemId={parseInt(item.id)} orderInfo={item.order} name={item.name} size={item.size} />
             )
           })}
         </div>
