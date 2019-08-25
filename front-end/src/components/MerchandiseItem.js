@@ -85,6 +85,7 @@ const MerchandiseItem = (props) => {
   }
   const getSizes = () => {
     console.log(props);
+    console.log(props.order[`${props.item.id}`]);
     const options = map(props.sizes, (size) => {
       const selected = props.editForm && props.order[`${props.item.id}`].size === size.id ? true : false;
       return (
@@ -96,9 +97,9 @@ const MerchandiseItem = (props) => {
 
   const handleChange = async (e, field) => {
     let valueId = parseInt(e.target.value);
-    if(isNaN(valueId)) {
-      valueId = 0;
-    }
+    // if(isNaN(valueId)) {
+    //   valueId = 0;
+    // }
     if(field === 'size') {
       await setSize(valueId);
     } else if (field === 'qty') {
@@ -170,7 +171,7 @@ const MerchandiseItem = (props) => {
     // merchForm.appendChild(formRow);
   }
 
-  console.log(newRows);
+  const qtyValue = props.editForm ? props.order[props.item.id].qty : qty;
 
   return (
     <div className='merchandise-item'>
@@ -193,7 +194,7 @@ const MerchandiseItem = (props) => {
             }
             <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
               <Form.Label>Qty</Form.Label>
-              <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
+              <Form.Control value={qtyValue} type='number' onChange={(e) => handleChange(e, 'qty')} />
             </Form.Group>
             <div className='add-circle'>
               {

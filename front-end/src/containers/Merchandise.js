@@ -35,15 +35,7 @@ class Merchandise extends Component {
         size: 1,
         qty: 0,
       },
-      7: {
-        size: 1,
-        qty: 0,
-      },
       8: {
-        size: 1,
-        qty: 0,
-      },
-      9: {
         size: 1,
         qty: 0,
       },
@@ -75,7 +67,7 @@ class Merchandise extends Component {
         size: 1,
         qty: 0,
       },
-      21: {
+      24: {
         size: 1,
         qty: 0,
       },
