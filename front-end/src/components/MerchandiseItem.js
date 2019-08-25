@@ -121,22 +121,33 @@ const MerchandiseItem = (props) => {
     e.preventDefault();
   }
 
+  const getPrices = () => {
+    const prices = props.item.price === props.item.adultPrice ? formatter.format(props.item.price) :
+      `${formatter.format(props.item.price)} - ${formatter.format(props.item.adultPrice)}`;
+    return prices;
+  }
+
+  console.log(props.item);
+
   return (
     <div className='merchandise-item'>
       <div className='merchandise-pic'>
-        <div className='price-text'>{formatter.format(props.item.price)}</div>
+        <div className='price-text'>{getPrices()}</div>
         <div className='merchandise-name'>{props.item.item}</div>
         <img src={src} alt='logo' />
       </div>
       <div className='merchandise-else'>
         <Form onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
-              <Form.Label>Size</Form.Label>
-              <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
-                {getSizes()}
-              </Form.Control>
-            </Form.Group>
+            {
+              props.item.itemTypeId !== 2 &&
+              <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+                <Form.Label>Size</Form.Label>
+                <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
+                  {getSizes()}
+                </Form.Control>
+              </Form.Group>
+            }
             <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
               <Form.Label>Qty</Form.Label>
               <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
