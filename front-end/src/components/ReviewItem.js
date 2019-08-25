@@ -81,8 +81,15 @@ const ReviewItem = props => {
         <div className='merchandise-name'>{props.name}</div>
         <img src={src} alt='logo' />
       </div>
-      <div className='merchandise-else'>
-        <div>{props.size}</div>
+      <div className='merchandise-else row'>
+        <div className='col-sm-6'>
+          <div className='category-label'>Size</div>
+          <div>{props.size}</div>
+        </div>
+        <div className='col-sm-6'>
+          <div className='category-label'>Qty</div>
+          <div>{props.orderInfo.qty}</div>
+        </div>
       </div>
     </div>
   );

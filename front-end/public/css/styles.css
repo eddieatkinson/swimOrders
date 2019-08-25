@@ -102,3 +102,7 @@
 }
 
 /* Review */
+.category-label {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
