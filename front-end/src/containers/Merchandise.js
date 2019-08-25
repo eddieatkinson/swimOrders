@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
+import Button from 'react-bootstrap/Button';
 
 import GetItemsAction from '../redux/actions/GetItemsAction';
-import MerchandiseItem from '../components/MerchandiseItem';
+import CompleteFormAction from '../redux/actions/CompleteFormAction';
 
+import MerchandiseItem from '../components/MerchandiseItem';
 
 class Merchandise extends Component {
   state = {
@@ -94,6 +96,11 @@ class Merchandise extends Component {
     }));
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.CompleteFormAction(this.state.order);
+  }
+
   render() {
     console.log(this.state.order);
     return(
@@ -103,6 +110,10 @@ class Merchandise extends Component {
             <MerchandiseItem order={this.state.order} amendOrder={this.amendOrder.bind(this)} key={i} item={item} sizes={this.props.sizes} />
           )
         })}
+        <div className='submit-button'>
+          {/* <Button onClick={this.handleReset.bind(this)} variant="outline-primary">Reset Form</Button> */}
+          <Button onClick={this.handleSubmit.bind(this)} type='submit'>Review & Submit</Button>
+        </div>
       </div>
     );
   }
@@ -117,4 +128,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   GetItemsAction,
+  CompleteFormAction,
 })(Merchandise);
