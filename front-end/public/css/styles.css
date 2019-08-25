@@ -43,3 +43,25 @@
 .pool-swimmer-content {
   width: 60%;
 }
+
+/* Merchandise Items */
+.merchandise-item {
+  margin: 40px 0;
+  display: flex;
+}
+
+.merchandise-pic {
+  flex: 1;
+  padding: 10px;
+}
+
+.merchandise-else {
+  flex: 8;
+  padding: 10px;
+  /* background-color: aquamarine; */
+}
+
+.merchandise-price {
+  flex: 2;
+  padding: 10px;
+}

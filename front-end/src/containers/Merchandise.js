@@ -14,9 +14,9 @@ class Merchandise extends Component {
     console.log(this.props);
     return(
       <div>
-        {map(this.props.items, (item) => {
+        {map(this.props.items, (item, i) => {
           return (
-            <MerchandiseItem item={item} />
+            <MerchandiseItem key={i} item={item} sizes={this.props.sizes} />
           )
         })}
       </div>
@@ -27,6 +27,7 @@ class Merchandise extends Component {
 const mapStateToProps = state => {
   return {
     items: state.data.items,
+    sizes: state.data.sizes,
   }
 }
 
