@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, map, find } from 'lodash';
+import Button from 'react-bootstrap/Button';
+
 import ReviewItem from '../components/ReviewItem';
+import EditFormAction from '../redux/actions/EditFormAction';
 
 class Review extends Component {
   getReviewItems() {
@@ -17,6 +20,11 @@ class Review extends Component {
     });
     return reviewItemsArray;
   }
+
+  handleEdit() {
+    this.props.EditFormAction();
+  }
+
   render() {
     const reviewItemsArray = this.getReviewItems();
     return (
@@ -28,6 +36,9 @@ class Review extends Component {
               <ReviewItem key={i} itemId={parseInt(item.id)} orderInfo={item.order} name={item.name} size={item.size} />
             )
           })}
+        </div>
+        <div className='submit-button'>
+          <Button variant="outline-primary" onClick={this.handleEdit.bind(this)}>Review & Submit</Button>
         </div>
       </div>
     );
@@ -42,4 +53,6 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Review);
+export default connect(mapStateToProps, {
+  EditFormAction,
+})(Review);

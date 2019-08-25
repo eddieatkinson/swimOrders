@@ -20,6 +20,7 @@ class App extends Component {
     agreeToTerms: '',
     next: false,
     submitted: false,
+    review: false,
   }
 
   getScreen() {
@@ -49,7 +50,9 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.order);
+    // console.log(this.props.order);
+    console.log(this.props.editForm);
+
     return (
       <div>
         <div className='top-fields-wrapper'>
@@ -72,6 +75,7 @@ const mapStateToProps = state => {
     size: state.data.size,
     formComplete: state.data.formComplete,
     order: state.data.order,
+    editForm: state.data.editForm,
   }
 }
 
