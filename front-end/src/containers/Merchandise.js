@@ -22,7 +22,7 @@ class Merchandise extends Component {
         ...this.state.order,
         [itemId]: merchandiseInfo,
       }
-    }))
+    }));
   }
 
   render() {
