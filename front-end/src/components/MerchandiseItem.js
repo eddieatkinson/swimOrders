@@ -168,8 +168,6 @@ const MerchandiseItem = (props) => {
     // merchForm.appendChild(formRow);
   }
 
-  console.log(newRows);
-
   return (
     <div className='merchandise-item'>
       <div className='merchandise-pic'>
