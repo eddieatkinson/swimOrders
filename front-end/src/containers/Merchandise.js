@@ -102,12 +102,13 @@ class Merchandise extends Component {
   }
 
   render() {
-    console.log(this.state.order);
+    const order = this.props.editForm ? this.props.order : this.state.order;
+    console.log(order);
     return(
       <div>
         {map(this.props.items, (item, i) => {
           return (
-            <MerchandiseItem order={this.state.order} amendOrder={this.amendOrder.bind(this)} key={i} item={item} sizes={this.props.sizes} />
+            <MerchandiseItem editForm={this.props.editForm} order={order} amendOrder={this.amendOrder.bind(this)} key={i} item={item} sizes={this.props.sizes} />
           )
         })}
         <div className='submit-button'>
@@ -123,6 +124,8 @@ const mapStateToProps = state => {
   return {
     items: state.data.items,
     sizes: state.data.sizes,
+    editForm: state.data.editForm,
+    order: state.data.order,
   }
 }
 

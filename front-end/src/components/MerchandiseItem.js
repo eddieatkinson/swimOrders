@@ -84,9 +84,11 @@ const MerchandiseItem = (props) => {
       break;
   }
   const getSizes = () => {
+    console.log(props);
     const options = map(props.sizes, (size) => {
+      const selected = props.editForm && props.order[`${props.item.id}`].size === size.id ? true : false;
       return (
-        <option value={size.id} key={size.id}>{size.name}</option>
+        <option selected={selected} value={size.id} key={size.id}>{size.name}</option>
       )
     });
     return options;
