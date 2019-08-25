@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { map } from 'lodash';
+import { MdAddCircle } from 'react-icons/md';
 
 import { formatter } from '../utilities';
 
@@ -24,6 +25,7 @@ import pic24 from '../assets/Nike Hat-2415.jpg';
 import Col from 'react-bootstrap/Col';
 
 const MerchandiseItem = (props) => {
+  const [newRows, setNewRows] = useState(0);
   const [qty, setQty] = useState(0);
   const [size, setSize] = useState(1);
   const [order, setOrder] = useState({size: 1, qty: 0});
@@ -127,7 +129,30 @@ const MerchandiseItem = (props) => {
     return prices;
   }
 
-  console.log(props.item);
+  // console.log(props.item);
+
+  const getFormRow = () => {
+    // const merchForm = document.getElementById('merch-form');
+    // console.log(merchForm);
+    const formRow = 
+      <Form.Row className='new-form-row'>
+        <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+          {/* <Form.Label>Size</Form.Label> */}
+          <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
+            {getSizes()}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
+          {/* <Form.Label>Qty</Form.Label> */}
+          <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
+        </Form.Group>
+        <div className='add-circle'><MdAddCircle style={{visibility: 'hidden'}} size='30px' /></div>
+      </Form.Row>
+    return formRow;
+    // merchForm.appendChild(formRow);
+  }
+
+  console.log(newRows);
 
   return (
     <div className='merchandise-item'>
@@ -137,7 +162,7 @@ const MerchandiseItem = (props) => {
         <img src={src} alt='logo' />
       </div>
       <div className='merchandise-else'>
-        <Form onSubmit={handleSubmit}>
+        <Form id='merch-form' onSubmit={handleSubmit}>
           <Form.Row>
             {
               props.item.itemTypeId !== 2 &&
@@ -152,7 +177,61 @@ const MerchandiseItem = (props) => {
               <Form.Label>Qty</Form.Label>
               <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
             </Form.Group>
+            <div className='add-circle'>
+              {
+                props.item.itemTypeId !== 2 &&
+                <MdAddCircle onClick={() => setNewRows(newRows + 1)} size='30px' color='#F5CE24' />
+              }
+            </div>
           </Form.Row>
+          {
+            newRows > 0 &&
+            getFormRow()
+          }
+          {
+            newRows > 1 &&
+            getFormRow()
+          }
+          {
+            newRows > 2 &&
+            getFormRow()
+          }
+          {
+            newRows > 3 &&
+            getFormRow()
+          }
+          {
+            newRows > 4 &&
+            getFormRow()
+          }
+          {
+            newRows > 5 &&
+            getFormRow()
+          }
+          {
+            newRows > 6 &&
+            getFormRow()
+          }
+          {
+            newRows > 7 &&
+            getFormRow()
+          }
+          {
+            newRows > 8 &&
+            getFormRow()
+          }
+          {
+            newRows > 9 &&
+            getFormRow()
+          }
+          {
+            newRows > 10 &&
+            getFormRow()
+          }
+          {
+            newRows > 11 &&
+            getFormRow()
+          }
         </Form>
       </div>
       {/* <div className='merchandise-price'>Price: {formatter.format(qty * props.item.price)}</div> */}
