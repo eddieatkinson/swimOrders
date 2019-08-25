@@ -35,15 +35,7 @@ class Merchandise extends Component {
         size: 1,
         qty: 0,
       },
-      7: {
-        size: 1,
-        qty: 0,
-      },
       8: {
-        size: 1,
-        qty: 0,
-      },
-      9: {
         size: 1,
         qty: 0,
       },
@@ -60,23 +52,18 @@ class Merchandise extends Component {
         qty: 0,
       },
       15: {
-        size: 1,
         qty: 0,
       },
       17: {
-        size: 1,
         qty: 0,
       },
       19: {
-        size: 1,
         qty: 0,
       },
       20: {
-        size: 1,
         qty: 0,
       },
-      21: {
-        size: 1,
+      24: {
         qty: 0,
       },
     },
@@ -87,7 +74,6 @@ class Merchandise extends Component {
   }
 
   amendOrder(itemId, merchandiseInfo) {
-    console.log(merchandiseInfo);
     this.setState(() => ({
       order: {
         ...this.state.order,
@@ -102,7 +88,6 @@ class Merchandise extends Component {
   }
 
   render() {
-    console.log(this.state.order);
     return(
       <div>
         {map(this.props.items, (item, i) => {

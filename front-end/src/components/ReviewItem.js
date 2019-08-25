@@ -73,8 +73,6 @@ const ReviewItem = props => {
       break;
   }
 
-  console.log(props);
-
   return (
     <div className='merchandise-item'>
       <div className='merchandise-pic'>
@@ -82,10 +80,13 @@ const ReviewItem = props => {
         <img src={src} alt='logo' />
       </div>
       <div className='merchandise-else row'>
-        <div className='col-sm-6'>
-          <div className='category-label'>Size</div>
-          <div>{props.size}</div>
-        </div>
+        {
+          props.size &&
+          <div className='col-sm-6'>
+            <div className='category-label'>Size</div>
+            <div>{props.size}</div>
+          </div>
+        }
         <div className='col-sm-6'>
           <div className='category-label'>Qty</div>
           <div>{props.orderInfo.qty}</div>

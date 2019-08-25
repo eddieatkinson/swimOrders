@@ -1,4 +1,4 @@
-import { GET_POOLS, GET_SWIMMERS, GET_SIZE, GET_SIZES, UPDATE_SIZE_ACTION, GET_ITEMS, SET_SWIMMER, COMPLETE_FORM } from "../types";
+import { GET_POOLS, GET_SWIMMERS, GET_SIZE, GET_SIZES, UPDATE_SIZE_ACTION, GET_ITEMS, SET_SWIMMER, COMPLETE_FORM, RESTART_FORM } from "../types";
 
 const INITIAL_STATE = {
   loading: false,
@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   items: [],
   order: {},
   formComplete: false,
+  restartForm: false,
   errorMessage: null,
   successMessage: null,
 };
@@ -30,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, swimmer: action.payload}
     case COMPLETE_FORM:
       return {...state, formComplete: true, order: action.payload}
+    case RESTART_FORM:
+        return {...state, restartForm: true, formComplete: false}
     case UPDATE_SIZE_ACTION:
       return {...state, successMessage: action.payload}
     default:

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, map, find } from 'lodash';
+import Button from 'react-bootstrap/Button';
+
 import ReviewItem from '../components/ReviewItem';
+
+import RestartFormAction from '../redux/actions/RestartFormAction';
+
 
 class Review extends Component {
   getReviewItems() {
@@ -9,7 +14,7 @@ class Review extends Component {
     forEach(this.props.order, (value, key) => {
       if (value.qty > 0) {
         const name = find(this.props.items, ['id', parseInt(key)]).item;
-        const size = find(this.props.sizes, ['id', parseInt(value.size)]).name;
+        const size = value.size && find(this.props.sizes, ['id', parseInt(value.size)]).name;
         reviewItemsArray.push(
           {id: key, order: value, name, size}
         );
@@ -17,17 +22,23 @@ class Review extends Component {
     });
     return reviewItemsArray;
   }
+  handleRestart() {
+    this.props.RestartFormAction();
+  }
   render() {
     const reviewItemsArray = this.getReviewItems();
     return (
       <div>
         <div>
           {map(reviewItemsArray, (item, i) => {
-            console.log(item);
             return (
               <ReviewItem key={i} itemId={parseInt(item.id)} orderInfo={item.order} name={item.name} size={item.size} />
             )
           })}
+        </div>
+        <div className='submit-button'>
+          <Button onClick={this.handleRestart.bind(this)} variant='outline-primary'>Start Over</Button>
+          <Button type='submit'>Submit</Button>
         </div>
       </div>
     );
@@ -42,4 +53,6 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Review);
+export default connect(mapStateToProps, {
+  RestartFormAction,
+})(Review);
