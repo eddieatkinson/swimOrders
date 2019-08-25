@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { map } from 'lodash';
+import { MdAddCircle } from 'react-icons/md';
 
 import { formatter } from '../utilities';
 
@@ -24,6 +25,7 @@ import pic24 from '../assets/Nike Hat-2415.jpg';
 import Col from 'react-bootstrap/Col';
 
 const MerchandiseItem = (props) => {
+  const [newRows, setNewRows] = useState(0);
   const [qty, setQty] = useState(0);
   const [size, setSize] = useState(1);
   const [order, setOrder] = useState({size: 1, qty: 0});
@@ -100,21 +102,37 @@ const MerchandiseItem = (props) => {
     } else if (field === 'qty') {
       await setQty(valueId);
     }
-    if(!props.order[props.item.id]) {
-      await props.amendOrder(props.item.id, {
-        size: 1,
-        qty: 0,
-      });
-      props.amendOrder(props.item.id, {
-        ...props.order[props.item.id],
-        [field]: valueId,
-      });
-    } else {
-      props.amendOrder(props.item.id, {
-        ...props.order[props.item.id],
-        [field]: valueId,
-      });
+    // if(!props.order[props.item.id]) {
+    //   await props.amendOrder(props.item.id, {
+    //     size: 1,
+    //     qty: 0,
+    //   });
+    //   props.amendOrder(props.item.id, {
+    //     ...props.order[props.item.id],
+    //     [field]: valueId,
+    //   });
+    // } else {
+      // props.amendOrder(props.item.id, {
+      //   ...props.order[props.item.id],
+      //   [field]: valueId,
+      // });
+    // }
+    props.amendOrder(props.item.id, {
+      ...props.order[props.item.id],
+      [field]: valueId,
+    });
+  }
+
+  const handleExtraSize = (e, field, newRowNum) => {
+    const newId = props.item.id + newRowNum/100;
+    let valueId = parseInt(e.target.value);
+    if(isNaN(valueId)) {
+      valueId = 0;
     }
+    props.amendOrder(newId, {
+      ...props.order[newId],
+      [field]: valueId,
+    });
   }
 
   const handleSubmit = (e) => {
@@ -127,7 +145,30 @@ const MerchandiseItem = (props) => {
     return prices;
   }
 
-  console.log(props.item);
+  // console.log(props.item);
+
+  const getFormRow = (newRowNum) => {
+    // const merchForm = document.getElementById('merch-form');
+    // console.log(merchForm);
+    const formRow = 
+      <Form.Row className='new-form-row'>
+        <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+          <Form.Label>Size</Form.Label>
+          <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
+            {getSizes()}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
+          <Form.Label>Qty</Form.Label>
+          <Form.Control type='number' onChange={(e) => handleExtraSize(e, 'qty', newRowNum)} />
+        </Form.Group>
+        <div className='add-circle'><MdAddCircle style={{visibility: 'hidden'}} size='30px' /></div>
+      </Form.Row>
+    return formRow;
+    // merchForm.appendChild(formRow);
+  }
+
+  console.log(newRows);
 
   return (
     <div className='merchandise-item'>
@@ -137,7 +178,7 @@ const MerchandiseItem = (props) => {
         <img src={src} alt='logo' />
       </div>
       <div className='merchandise-else'>
-        <Form onSubmit={handleSubmit}>
+        <Form id='merch-form' onSubmit={handleSubmit}>
           <Form.Row>
             {
               props.item.itemTypeId !== 2 &&
@@ -152,7 +193,109 @@ const MerchandiseItem = (props) => {
               <Form.Label>Qty</Form.Label>
               <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
             </Form.Group>
+            <div className='add-circle'>
+              {
+                props.item.itemTypeId !== 2 &&
+                <MdAddCircle onClick={() => setNewRows(newRows + 1)} size='30px' color='#F5CE24' />
+              }
+            </div>
           </Form.Row>
+          {
+            newRows > 0 &&
+            getFormRow(1)
+          }
+          {
+            newRows > 1 &&
+            getFormRow(2)
+          }
+          {
+            newRows > 2 &&
+            getFormRow(3)
+          }
+          {
+            newRows > 3 &&
+            getFormRow(4)
+          }
+          {
+            newRows > 4 &&
+            getFormRow(5)
+          }
+          {
+            newRows > 5 &&
+            getFormRow(6)
+          }
+          {
+            newRows > 6 &&
+            getFormRow(7)
+          }
+          {
+            newRows > 7 &&
+            getFormRow(8)
+          }
+          {
+            newRows > 8 &&
+            getFormRow(9)
+          }
+          {
+            newRows > 9 &&
+            getFormRow(10)
+          }
+          {
+            newRows > 10 &&
+            getFormRow(11)
+          }
+          {
+            newRows > 11 &&
+            getFormRow(12)
+          }
+          {
+            newRows > 12 &&
+            getFormRow(13)
+          }
+          {
+            newRows > 13 &&
+            getFormRow(14)
+          }
+          {
+            newRows > 14 &&
+            getFormRow(15)
+          }
+          {
+            newRows > 15 &&
+            getFormRow(16)
+          }
+          {
+            newRows > 16 &&
+            getFormRow(17)
+          }
+          {
+            newRows > 17 &&
+            getFormRow(18)
+          }
+          {
+            newRows > 18 &&
+            getFormRow(19)
+          }
+          {
+            newRows > 19 &&
+            getFormRow(20)
+          }
+          {
+            newRows > 20 &&
+            getFormRow(21)
+          }
+          {
+            newRows > 21 &&
+            getFormRow(22)
+          }
+          {
+            newRows > 22 &&
+            getFormRow(23)
+          }
+          {
+            newRows > 23 &&
+            getFormRow(24)
+          }
         </Form>
       </div>
       {/* <div className='merchandise-price'>Price: {formatter.format(qty * props.item.price)}</div> */}

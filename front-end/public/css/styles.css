@@ -74,10 +74,17 @@
 }
 
 .merchandise-else {
+  /* display: inline; */
   flex: 6;
   padding: 100px;
   text-align: center;
   /* background-color: aquamarine; */
+}
+
+.add-circle {
+  /* flex: 1; */
+  text-align: center;
+  padding: 35px 10px;
 }
 
 .merchandise-price {
@@ -95,3 +102,7 @@
 }
 
 /* Review */
+.category-label {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
