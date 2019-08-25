@@ -51,12 +51,18 @@
 }
 
 .merchandise-pic {
-  flex: 1;
+  flex: 2;
+  text-align: center;
   padding: 10px;
 }
 
+.merchandise-name {
+  padding: 5px;
+  font-size: 20px;
+}
+
 .merchandise-else {
-  flex: 8;
+  flex: 6;
   padding: 10px;
   /* background-color: aquamarine; */
 }

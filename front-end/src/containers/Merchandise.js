@@ -7,16 +7,31 @@ import MerchandiseItem from '../components/MerchandiseItem';
 
 
 class Merchandise extends Component {
+  state = {
+    order: {},
+  }
+
   componentDidMount() {
     this.props.GetItemsAction()
   }
+
+  amendOrder(itemId, merchandiseInfo) {
+    console.log(merchandiseInfo);
+    this.setState(() => ({
+      order: {
+        ...this.state.order,
+        [itemId]: merchandiseInfo,
+      }
+    }))
+  }
+
   render() {
-    console.log(this.props);
+    console.log(this.state.order);
     return(
       <div>
         {map(this.props.items, (item, i) => {
           return (
-            <MerchandiseItem key={i} item={item} sizes={this.props.sizes} />
+            <MerchandiseItem order={this.state.order} amendOrder={this.amendOrder.bind(this)} key={i} item={item} sizes={this.props.sizes} />
           )
         })}
       </div>
