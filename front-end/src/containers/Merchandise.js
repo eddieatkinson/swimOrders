@@ -8,7 +8,76 @@ import MerchandiseItem from '../components/MerchandiseItem';
 
 class Merchandise extends Component {
   state = {
-    order: {},
+    order: {
+      1: {
+        size: 1,
+        qty: 0,
+      },
+      2: {
+        size: 1,
+        qty: 0,
+      },
+      3: {
+        size: 1,
+        qty: 0,
+      },
+      4: {
+        size: 1,
+        qty: 0,
+      },
+      5: {
+        size: 1,
+        qty: 0,
+      },
+      6: {
+        size: 1,
+        qty: 0,
+      },
+      7: {
+        size: 1,
+        qty: 0,
+      },
+      8: {
+        size: 1,
+        qty: 0,
+      },
+      9: {
+        size: 1,
+        qty: 0,
+      },
+      10: {
+        size: 1,
+        qty: 0,
+      },
+      11: {
+        size: 1,
+        qty: 0,
+      },
+      14: {
+        size: 1,
+        qty: 0,
+      },
+      15: {
+        size: 1,
+        qty: 0,
+      },
+      17: {
+        size: 1,
+        qty: 0,
+      },
+      19: {
+        size: 1,
+        qty: 0,
+      },
+      20: {
+        size: 1,
+        qty: 0,
+      },
+      21: {
+        size: 1,
+        qty: 0,
+      },
+    },
   }
 
   componentDidMount() {
