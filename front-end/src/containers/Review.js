@@ -38,7 +38,7 @@ class Review extends Component {
           })}
         </div>
         <div className='submit-button'>
-          <Button variant="outline-primary" onClick={this.handleEdit.bind(this)}>Review & Submit</Button>
+          <Button variant="outline-primary" onClick={this.handleEdit.bind(this)}>Edit</Button>
         </div>
       </div>
     );
