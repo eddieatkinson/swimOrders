@@ -77,7 +77,7 @@ class PoolSwimmer extends Component {
           onClick={this.handleSizeClick.bind(this)}
           type="text"
           readOnly
-          placeholder={this.props.size[0] && this.props.size[0].name}
+          placeholder={this.props.size && this.props.size[0] && this.props.size[0].name}
         />
         <Form.Text className="text-muted">
           This is your swimmer's shirt size on file. Click on the field to change it.

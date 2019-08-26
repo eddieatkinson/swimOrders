@@ -12,58 +12,73 @@ class Merchandise extends Component {
   state = {
     order: {
       1: {
+        id: 1,
         size: 1,
         qty: 0,
       },
       2: {
+        id: 2,
         size: 1,
         qty: 0,
       },
       3: {
+        id: 3,
         size: 1,
         qty: 0,
       },
       4: {
+        id: 4,
         size: 1,
         qty: 0,
       },
       5: {
+        id: 5,
         size: 1,
         qty: 0,
       },
       6: {
+        id: 6,
         size: 1,
         qty: 0,
       },
       8: {
+        id: 8,
         size: 1,
         qty: 0,
       },
       10: {
+        id: 10,
         size: 1,
         qty: 0,
       },
       11: {
+        id: 11,
         size: 1,
         qty: 0,
       },
       14: {
+        id: 14,
         size: 1,
         qty: 0,
       },
       15: {
+        id: 15,
         qty: 0,
       },
       17: {
+        id: 17,
         qty: 0,
       },
       19: {
+        id: 19,
         qty: 0,
       },
       20: {
+        id: 20,
         qty: 0,
       },
       24: {
+        id: 24,
         qty: 0,
       },
     },
@@ -96,7 +111,6 @@ class Merchandise extends Component {
           )
         })}
         <div className='submit-button'>
-          {/* <Button onClick={this.handleReset.bind(this)} variant="outline-primary">Reset Form</Button> */}
           <Button onClick={this.handleSubmit.bind(this)} type='submit'>Review & Submit</Button>
         </div>
       </div>

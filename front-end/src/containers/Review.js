@@ -2,13 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, map, find } from 'lodash';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
 
 import ReviewItem from '../components/ReviewItem';
 
+import { emailCheck } from '../utilities';
+
 import RestartFormAction from '../redux/actions/RestartFormAction';
+import SubmitOrderAction from '../redux/actions/SubmitOrderAction';
 
 
 class Review extends Component {
+  state = {
+    email: '',
+    name: '',
+    phone: '',
+  }
   getReviewItems() {
     const reviewItemsArray = [];
     forEach(this.props.order, (value, key) => {
@@ -22,8 +32,42 @@ class Review extends Component {
     });
     return reviewItemsArray;
   }
+  handleChange(e, field) {
+    const value = e.target.value;
+    this.setState({
+      [field]: value,
+    });
+  }
   handleRestart() {
     this.props.RestartFormAction();
+  }
+  getSwimmerName() {
+
+  }
+  async handleSubmit() {
+    console.log(this.props.order);
+    const order = this.getReviewItems();
+    console.log(this.getReviewItems());
+    const { email, name, phone } = this.state;
+    const orderPacket = {
+      ...this.state,
+      swimmerId: this.props.swimmer.id,
+      swimmerName: this.props.swimmer.name,
+      order,
+    }
+    if (name === '' || email === '' || phone === '') {
+      alert('All fields must be filled.');
+    } else if (!email.match(emailCheck)) {
+      alert('Please enter a valid email address.');
+    } else {
+      // const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
+      const response = await this.props.SubmitOrderAction(orderPacket);
+      console.log(response);
+      if (response.payload && response.payload.msg === 'orderSuccess') {
+        alert('Your order has been placed!');
+        document.location.reload(true); // reload page to start over
+      }
+    }
   }
   render() {
     const reviewItemsArray = this.getReviewItems();
@@ -36,9 +80,31 @@ class Review extends Component {
             )
           })}
         </div>
+        <Form className='review-form'>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control onChange={(e) => this.handleChange(e, 'email')} type="email" />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput2">
+                <Form.Label>Your Name</Form.Label>
+                <Form.Control onChange={(e) => this.handleChange(e, 'name')} type="text" />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="exampleForm.ControlInput3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control onChange={(e) => this.handleChange(e, 'phone')} type="text" />
+              </Form.Group>
+            </Col>
+          </Form.Row>
+        </Form>
         <div className='submit-button'>
           <Button onClick={this.handleRestart.bind(this)} variant='outline-primary'>Start Over</Button>
-          <Button type='submit'>Submit</Button>
+          <Button onClick={this.handleSubmit.bind(this)} type='submit'>Submit</Button>
         </div>
       </div>
     );
@@ -47,6 +113,7 @@ class Review extends Component {
 
 const mapStateToProps = state => {
   return {
+    swimmer: state.data.swimmer,
     order: state.data.order,
     sizes: state.data.sizes,
     items: state.data.items,
@@ -55,4 +122,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   RestartFormAction,
+  SubmitOrderAction,
 })(Review);
