@@ -9,12 +9,12 @@
       <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Email:</span> <%= email %></li>
       <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Phone:</span> <%= phone %></li>
     </ul>
-    <ul style="list-style: none;">
-      <%for (let i = 0; i < order.length; i++) {%>
+    <%for (let i = 0; i < order.length; i++) {%>
+      <ul style="list-style: none;">
         <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Item:</span> <%=order[i].name %></li>
         <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Size:</span> <%=order[i].size %></li>
-        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Size:</span> <%=order[i].order.qty %></li>
-      <%}%>
-    </ul>
+        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Qty:</span> <%=order[i].order.qty %></li>
+      </ul>
+    <%}%>
   </div>
 </div>

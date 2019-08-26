@@ -192,9 +192,34 @@ router.post('/submitorder', (req, res) => {
             msg: 'mailToAdminFail',
           });
         } else {
-          res.json({
-            msg: 'orderSuccess',
-          });
+          const ejsObjectParent = {
+            poolName,
+            groupName,
+            order,
+          }
+          ejs.renderFile(__dirname + '/parentEmail.ejs', ejsObjectParent, (err3, data2) => {
+            if (err3) {
+              console.log(err3);
+            } else {
+              const mailToParent = {
+                from: 'Gold Swim Merchandise',
+                to: email,
+                subject: `Your Gold Swim Order for ${swimmerName}!`,
+                html: data2,
+              };
+              transporter.sendMail(mailToParent, (err4) => {
+                if (err4) {
+                  res.json({
+                    msg: 'mailToParentFail',
+                  });
+                } else {
+                  res.json({
+                    msg: 'orderSuccess',
+                  });
+                }
+              })
+            }
+          })
         }
       })
     }
