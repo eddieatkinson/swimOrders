@@ -53,7 +53,7 @@ class PoolSwimmer extends Component {
     field === 'pool' && this.props.GetSwimmersAction(thingId);
     field === 'pool' && this.props.GetPoolAction(thingId);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.usedSizeId);
-    field === 'swimmer' && this.props.GetGroupAction(thingOfInterest.groupId);
+    // field === 'swimmer' && this.props.GetGroupAction(thingOfInterest.groupId);
     field === 'swimmer' && this.props.SetSwimmerAction(thingOfInterest);
   }
 
@@ -166,6 +166,7 @@ class PoolSwimmer extends Component {
   }
 
   render() {
+    console.log(this.props.size);
     const poolDropdownId = "exampleForm.ControlSelect1";
     return(
       <div className='pool-swimmer-container'>

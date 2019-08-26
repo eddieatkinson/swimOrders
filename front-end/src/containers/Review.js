@@ -55,6 +55,7 @@ class Review extends Component {
     const orderPacket = {
       ...this.state,
       swimmerId: this.props.swimmer.id,
+      swimmerSize: this.props.size[0].name,
       swimmerName: this.props.swimmer.name,
       poolName: this.props.pool[0].name,
       groupName: this.props.swimmer.groupName,
@@ -137,6 +138,7 @@ const mapStateToProps = state => {
     swimmer: state.data.swimmer,
     order: state.data.order,
     sizes: state.data.sizes,
+    size: state.data.size,
     items: state.data.items,
     pool: state.data.pool,
     group: state.data.group,
