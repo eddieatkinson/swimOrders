@@ -54,7 +54,7 @@ class Review extends Component {
       swimmerId: this.props.swimmer.id,
       swimmerName: this.props.swimmer.name,
       poolName: this.props.pool[0].name,
-      groupName: this.props.group[0].name,
+      groupName: this.props.swimmer.groupName,
       order,
     }
     if (name === '' || email === '' || phone === '') {
