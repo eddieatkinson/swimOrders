@@ -1,0 +1,20 @@
+<div style="overflow: auto;">
+  <div style="width: 50%; background-color: white; margin: 20px auto; padding: 20px 50px;">
+    <h1>New Order Information:</h1>
+    <ul style="list-style: none;">
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Parent Name:</span> <%= name %></li>
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Swimmer Name:</span> <%= swimmerName %></li>
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Pool:</span> <%= poolName %></li>
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Group:</span> <%= groupName %></li>
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Email:</span> <%= email %></li>
+      <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Phone:</span> <%= phone %></li>
+    </ul>
+    <%for (let i = 0; i < order.length; i++) {%>
+      <ul style="list-style: none;">
+        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Item:</span> <%=order[i].name %></li>
+        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Size:</span> <%=order[i].size %></li>
+        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Qty:</span> <%=order[i].order.qty %></li>
+      </ul>
+    <%}%>
+  </div>
+</div>

@@ -6,8 +6,10 @@ import Button from 'react-bootstrap/Button';
 import { map, findIndex, find } from 'lodash';
 
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
+import GetPoolAction from '../redux/actions/GetPoolAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
+import GetGroupAction from '../redux/actions/GetGroupAction';
 import GetSizeAction from '../redux/actions/GetSizeAction';
 import UpdateSizeAction from '../redux/actions/UpdateSizeAction';
 import SetSwimmerAction from '../redux/actions/SetSwimmerAction';
@@ -49,7 +51,9 @@ class PoolSwimmer extends Component {
       [field]: thingOfInterest,
     });
     field === 'pool' && this.props.GetSwimmersAction(thingId);
+    field === 'pool' && this.props.GetPoolAction(thingId);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.usedSizeId);
+    field === 'swimmer' && this.props.GetGroupAction(thingOfInterest.groupId);
     field === 'swimmer' && this.props.SetSwimmerAction(thingOfInterest);
   }
 
@@ -133,6 +137,10 @@ class PoolSwimmer extends Component {
     return confirmationSignature;
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
   renderModal() {
     return (
       <Modal show={this.state.showModal} onHide={this.handleClose.bind(this)}>
@@ -140,7 +148,7 @@ class PoolSwimmer extends Component {
           <Modal.Title>Change your swimmer's shirt size</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className='wrapper pool-swimmer-content'>
+          <Form onSubmit={this.handleSubmit} className='wrapper pool-swimmer-content'>
             <Form.Group controlId="exampleForm.ControlSelect3">
               <Form.Control as="select" onChange={(e) => this.handleChange(e, 'size', 'exampleForm.ControlSelect3')}>
                 {this.getOptions('sizes')}
@@ -191,7 +199,9 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   GetPoolsAction,
+  GetPoolAction,
   GetSizesAction,
+  GetGroupAction,
   GetSwimmersAction,
   GetSizeAction,
   UpdateSizeAction,

@@ -91,6 +91,36 @@ router.get('/getsize/:sizeId', (req, res) => {
   });
 });
 
+router.get('/getpool/:poolId', (req, res) => {
+  console.log('Getting pool...');
+  const { poolId } = req.params;
+  const selectionQuery = `SELECT * FROM pools
+    WHERE id = ?;`;
+  connection.query(selectionQuery, [poolId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
+router.get('/getgroup/:groupId', (req, res) => {
+  console.log('Getting group...');
+  const { groupId } = req.params;
+  const selectionQuery = `SELECT * FROM groups
+    WHERE id = ?;`;
+  connection.query(selectionQuery, [groupId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
 router.get('/getitems', (req, res) => {
   console.log('Getting items...');
   const selectionQuery = `SELECT * FROM items;`;
@@ -125,7 +155,7 @@ router.post('/updatesize', (req, res) => {
 router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
   console.log(req.body);
-  const { swimmerId, email, name, phone, swimmerName, order } = req.body;
+  const { swimmerId, email, name, phone, swimmerName, order, poolName, groupName } = req.body;
   const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
     VALUES
     (?,?,?,?,?,?,?);`;
@@ -137,9 +167,66 @@ router.post('/submitorder', (req, res) => {
     });
   });
   console.log('order success!');
-  res.json({
-    msg: 'orderSuccess',
-  });
+  const ejsObjectAdmin = {
+    name,
+    swimmerName,
+    email,
+    poolName,
+    groupName,
+    phone,
+    order,
+  }
+  ejs.renderFile(__dirname + '/adminEmail.ejs', ejsObjectAdmin, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const mailToAdmin = {
+        from: 'New Order',
+        to: mail.user,
+        subject: `New Order for ${poolName} Pool`,
+        html: data,
+      };
+      transporter.sendMail(mailToAdmin, (err2) => {
+        if (err2) {
+          res.json({
+            msg: 'mailToAdminFail',
+          });
+        } else {
+          const ejsObjectParent = {
+            poolName,
+            groupName,
+            order,
+          }
+          ejs.renderFile(__dirname + '/parentEmail.ejs', ejsObjectParent, (err3, data2) => {
+            if (err3) {
+              console.log(err3);
+            } else {
+              const mailToParent = {
+                from: 'Gold Swim Merchandise',
+                to: email,
+                subject: `Your Gold Swim Order for ${swimmerName}!`,
+                html: data2,
+              };
+              transporter.sendMail(mailToParent, (err4) => {
+                if (err4) {
+                  res.json({
+                    msg: 'mailToParentFail',
+                  });
+                } else {
+                  res.json({
+                    msg: 'orderSuccess',
+                  });
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  })
+  // res.json({
+  //   msg: 'orderSuccess',
+  // });
 });
 
 module.exports = router;
