@@ -90,6 +90,9 @@ class Review extends Component {
             )
           })}
         </div>
+        <div className='price-review'>
+          Total to be charged to account: {this.props.price}
+        </div>
         <Form className='review-form'>
           <Form.Row>
             <Col>
