@@ -155,7 +155,7 @@ router.post('/updatesize', (req, res) => {
 router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
   console.log(req.body);
-  const { swimmerId, email, name, phone, swimmerName, order, poolName, groupName } = req.body;
+  const { swimmerId, email, name, phone, swimmerName, order, poolName, groupName, swimmerSize, price } = req.body;
   const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
     VALUES
     (?,?,?,?,?,?,?);`;
@@ -170,11 +170,13 @@ router.post('/submitorder', (req, res) => {
   const ejsObjectAdmin = {
     name,
     swimmerName,
+    swimmerSize,
     email,
     poolName,
     groupName,
     phone,
     order,
+    price,
   }
   ejs.renderFile(__dirname + '/adminEmail.ejs', ejsObjectAdmin, (err, data) => {
     if (err) {
@@ -196,6 +198,7 @@ router.post('/submitorder', (req, res) => {
             poolName,
             groupName,
             order,
+            price,
           }
           ejs.renderFile(__dirname + '/parentEmail.ejs', ejsObjectParent, (err3, data2) => {
             if (err3) {

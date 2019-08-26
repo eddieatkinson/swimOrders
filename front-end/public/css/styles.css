@@ -127,3 +127,9 @@
 .review-form {
   padding: 15px;
 }
+
+.price-review {
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+}

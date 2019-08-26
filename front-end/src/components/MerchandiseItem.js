@@ -101,6 +101,36 @@ const MerchandiseItem = (props) => {
     return options;
   }
 
+  const getJumpRopeSizeColors = () => {
+    const jumpRopeSizes = [
+      'Small - Red/White',
+      'Medium - Black/White',
+      'Large - Black/Red',
+    ];
+    const options = map(jumpRopeSizes, (size, i) => {
+      return (
+        <option key={i} value={size}>{size}</option>
+      );
+    });
+    return options;
+  }
+
+  const getStretchCordColors = () => {
+    const stretchCordColors = [
+      'Green',
+      'Red',
+      'Blue',
+      'Black',
+      'Gray, for the MIGHTIEST of ALL!!!',
+    ];
+    const options = map(stretchCordColors, (color, i) => {
+      return (
+        <option key={i} value={color}>{color}</option>
+      );
+    });
+    return options;
+  }
+
   const handleChange = async (e, field) => {
     let valueId = parseInt(e.target.value);
     if(isNaN(valueId)) {
@@ -132,6 +162,24 @@ const MerchandiseItem = (props) => {
     });
   }
 
+  const handleJumpRopeSelect = (e) => {
+    let value = e.target.value;
+    console.log(value);
+    props.amendOrder(props.item.id, {
+      ...props.order[props.item.id],
+      special: value,
+    });
+  }
+
+  const handleStretchCordSelect = (e) => {
+    let value = e.target.value;
+    console.log(value);
+    props.amendOrder(props.item.id, {
+      ...props.order[props.item.id],
+      color: value,
+    });
+  }
+
   const handleExtraSize = (e, field, newRowNum) => {
     const newId = props.item.id + newRowNum/100;
     let valueId = parseInt(e.target.value);
@@ -142,6 +190,26 @@ const MerchandiseItem = (props) => {
       ...props.order[newId],
       id: newId,
       [field]: valueId,
+    });
+  }
+
+  const handleExtraJumpRopes = (e, newRowNum) => {
+    const newId = props.item.id + newRowNum/100;
+    let value = e.target.value;
+    props.amendOrder(newId, {
+      ...props.order[newId],
+      id: newId,
+      special: value,
+    });
+  }
+
+  const handleExtraStretchCords = (e, newRowNum) => {
+    const newId = props.item.id + newRowNum/100;
+    let value = e.target.value;
+    props.amendOrder(newId, {
+      ...props.order[newId],
+      id: newId,
+      color: value,
     });
   }
 
@@ -162,12 +230,39 @@ const MerchandiseItem = (props) => {
     // console.log(merchForm);
     const formRow = 
       <Form.Row className='new-form-row'>
-        <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+        {/* <Form.Group as={Col} controlId="exampleForm.ControlInput1">
           <Form.Label>Size</Form.Label>
           <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
             {getSizes()}
           </Form.Control>
-        </Form.Group>
+        </Form.Group> */}
+          {
+            props.item.itemTypeId === 1 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Size</Form.Label>
+              <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
+                {getSizes()}
+              </Form.Control>
+            </Form.Group>
+          }
+          {
+            props.item.itemTypeId === 3 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Size/Color</Form.Label>
+              <Form.Control as='select' onChange={e => handleExtraJumpRopes(e, newRowNum)}>
+                {getJumpRopeSizeColors()}
+              </Form.Control>
+            </Form.Group>
+          }
+          {
+            props.item.itemTypeId === 4 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Color</Form.Label>
+              <Form.Control as='select' onChange={e => handleExtraStretchCords(e, newRowNum)}>
+                {getStretchCordColors()}
+              </Form.Control>
+            </Form.Group>
+          }
         <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
           <Form.Label>Qty</Form.Label>
           <Form.Control type='number' onChange={(e) => handleExtraSize(e, 'qty', newRowNum)} />
@@ -189,11 +284,29 @@ const MerchandiseItem = (props) => {
         <Form id='merch-form' onSubmit={handleSubmit}>
           <Form.Row>
             {
-              props.item.itemTypeId !== 2 &&
+              props.item.itemTypeId === 1 &&
               <Form.Group as={Col} controlId="exampleForm.ControlInput1">
                 <Form.Label>Size</Form.Label>
                 <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
                   {getSizes()}
+                </Form.Control>
+              </Form.Group>
+            }
+            {
+              props.item.itemTypeId === 3 &&
+              <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+                <Form.Label>Size/Color</Form.Label>
+                <Form.Control as='select' onChange={e => handleJumpRopeSelect(e)}>
+                  {getJumpRopeSizeColors()}
+                </Form.Control>
+              </Form.Group>
+            }
+            {
+              props.item.itemTypeId === 4 &&
+              <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+                <Form.Label>Color</Form.Label>
+                <Form.Control as='select' onChange={e => handleStretchCordSelect(e)}>
+                  {getStretchCordColors()}
                 </Form.Control>
               </Form.Group>
             }
