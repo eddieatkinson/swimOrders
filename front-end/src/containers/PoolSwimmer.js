@@ -133,6 +133,10 @@ class PoolSwimmer extends Component {
     return confirmationSignature;
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
   renderModal() {
     return (
       <Modal show={this.state.showModal} onHide={this.handleClose.bind(this)}>
@@ -140,7 +144,7 @@ class PoolSwimmer extends Component {
           <Modal.Title>Change your swimmer's shirt size</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className='wrapper pool-swimmer-content'>
+          <Form onSubmit={this.handleSubmit} className='wrapper pool-swimmer-content'>
             <Form.Group controlId="exampleForm.ControlSelect3">
               <Form.Control as="select" onChange={(e) => this.handleChange(e, 'size', 'exampleForm.ControlSelect3')}>
                 {this.getOptions('sizes')}
