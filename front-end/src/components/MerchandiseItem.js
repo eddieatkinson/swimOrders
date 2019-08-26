@@ -101,6 +101,20 @@ const MerchandiseItem = (props) => {
     return options;
   }
 
+  const getJumpRopeSizeColors = () => {
+    const jumpRopeSizes = [
+      'Small - Red/White',
+      'Medium - Black/White',
+      'Large - Black/Red',
+    ];
+    const options = map(jumpRopeSizes, (size, i) => {
+      return (
+        <option key={i} value={size}>{size}</option>
+      );
+    });
+    return options;
+  }
+
   const handleChange = async (e, field) => {
     let valueId = parseInt(e.target.value);
     if(isNaN(valueId)) {
@@ -129,6 +143,15 @@ const MerchandiseItem = (props) => {
     props.amendOrder(props.item.id, {
       ...props.order[props.item.id],
       [field]: valueId,
+    });
+  }
+
+  const handleJumpRopeSelect = (e) => {
+    let value = e.target.value;
+    console.log(value);
+    props.amendOrder(props.item.id, {
+      ...props.order[props.item.id],
+      special: value,
     });
   }
 
@@ -189,11 +212,20 @@ const MerchandiseItem = (props) => {
         <Form id='merch-form' onSubmit={handleSubmit}>
           <Form.Row>
             {
-              props.item.itemTypeId !== 2 &&
+              props.item.itemTypeId === 1 &&
               <Form.Group as={Col} controlId="exampleForm.ControlInput1">
                 <Form.Label>Size</Form.Label>
                 <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
                   {getSizes()}
+                </Form.Control>
+              </Form.Group>
+            }
+            {
+              props.item.itemTypeId === 3 &&
+              <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+                <Form.Label>Size/Color</Form.Label>
+                <Form.Control as='select' onChange={e => handleJumpRopeSelect(e)}>
+                  {getJumpRopeSizeColors()}
                 </Form.Control>
               </Form.Group>
             }

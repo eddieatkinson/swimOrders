@@ -87,6 +87,13 @@ const ReviewItem = props => {
             <div>{props.size}</div>
           </div>
         }
+        {
+          props.special &&
+          <div className='col-sm-6'>
+            <div className='category-label'>Size/Color</div>
+            <div>{props.special}</div>
+          </div>
+        }
         <div className='col-sm-6'>
           <div className='category-label'>Qty</div>
           <div>{props.orderInfo.qty}</div>

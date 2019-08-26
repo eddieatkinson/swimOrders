@@ -75,6 +75,7 @@ class Merchandise extends Component {
       19: {
         id: 19,
         qty: 0,
+        special: 'Small - Red/White',
       },
       20: {
         id: 20,
@@ -122,6 +123,7 @@ class Merchandise extends Component {
   }
 
   render() {
+    console.log(this.state.order);
     return(
       <div>
         {map(this.props.items, (item, i) => {

@@ -26,7 +26,7 @@ class Review extends Component {
         const name = find(this.props.items, ['id', parseInt(key)]).item;
         const size = value.size && find(this.props.sizes, ['id', parseInt(value.size)]).name;
         reviewItemsArray.push(
-          {id: key, order: value, name, size}
+          {id: key, order: value, name, size, special: value.special}
         );
       }
     });
@@ -79,14 +79,14 @@ class Review extends Component {
     }
   }
   render() {
-    console.log(this.props.price);
+    console.log(this.props.order);
     const reviewItemsArray = this.getReviewItems();
     return (
       <div>
         <div>
           {map(reviewItemsArray, (item, i) => {
             return (
-              <ReviewItem key={i} itemId={parseInt(item.id)} orderInfo={item.order} name={item.name} size={item.size} />
+              <ReviewItem key={i} itemId={parseInt(item.id)} orderInfo={item.order} name={item.name} size={item.size} special={item.special} />
             )
           })}
         </div>
