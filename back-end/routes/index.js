@@ -91,6 +91,36 @@ router.get('/getsize/:sizeId', (req, res) => {
   });
 });
 
+router.get('/getpool/:poolId', (req, res) => {
+  console.log('Getting pool...');
+  const { poolId } = req.params;
+  const selectionQuery = `SELECT * FROM pools
+    WHERE id = ?;`;
+  connection.query(selectionQuery, [poolId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
+router.get('/getgroup/:groupId', (req, res) => {
+  console.log('Getting group...');
+  const { groupId } = req.params;
+  const selectionQuery = `SELECT * FROM groups
+    WHERE id = ?;`;
+  connection.query(selectionQuery, [groupId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
 router.get('/getitems', (req, res) => {
   console.log('Getting items...');
   const selectionQuery = `SELECT * FROM items;`;
@@ -125,7 +155,7 @@ router.post('/updatesize', (req, res) => {
 router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
   console.log(req.body);
-  const { swimmerId, email, name, phone, swimmerName, order } = req.body;
+  const { swimmerId, email, name, phone, swimmerName, order, poolName, groupName } = req.body;
   const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
     VALUES
     (?,?,?,?,?,?,?);`;

@@ -53,6 +53,8 @@ class Review extends Component {
       ...this.state,
       swimmerId: this.props.swimmer.id,
       swimmerName: this.props.swimmer.name,
+      poolName: this.props.pool[0].name,
+      groupName: this.props.group[0].name,
       order,
     }
     if (name === '' || email === '' || phone === '') {
@@ -117,6 +119,8 @@ const mapStateToProps = state => {
     order: state.data.order,
     sizes: state.data.sizes,
     items: state.data.items,
+    pool: state.data.pool,
+    group: state.data.group,
   }
 }
 

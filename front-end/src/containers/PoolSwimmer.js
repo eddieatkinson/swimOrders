@@ -6,8 +6,10 @@ import Button from 'react-bootstrap/Button';
 import { map, findIndex, find } from 'lodash';
 
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
+import GetPoolAction from '../redux/actions/GetPoolAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
+import GetGroupAction from '../redux/actions/GetGroupAction';
 import GetSizeAction from '../redux/actions/GetSizeAction';
 import UpdateSizeAction from '../redux/actions/UpdateSizeAction';
 import SetSwimmerAction from '../redux/actions/SetSwimmerAction';
@@ -49,7 +51,9 @@ class PoolSwimmer extends Component {
       [field]: thingOfInterest,
     });
     field === 'pool' && this.props.GetSwimmersAction(thingId);
+    field === 'pool' && this.props.GetPoolAction(thingId);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.usedSizeId);
+    field === 'swimmer' && this.props.GetGroupAction(thingOfInterest.groupId);
     field === 'swimmer' && this.props.SetSwimmerAction(thingOfInterest);
   }
 
@@ -195,7 +199,9 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   GetPoolsAction,
+  GetPoolAction,
   GetSizesAction,
+  GetGroupAction,
   GetSwimmersAction,
   GetSizeAction,
   UpdateSizeAction,

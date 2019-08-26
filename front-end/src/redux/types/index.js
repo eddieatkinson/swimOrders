@@ -1,5 +1,7 @@
 export const GET_POOLS = 'GET_POOLS';
+export const GET_POOL = 'GET_POOL';
 export const GET_SWIMMERS = 'GET_SWIMMERS';
+export const GET_GROUP = 'GET_GROUP';
 export const GET_SIZE = 'GET_SIZE';
 export const GET_SIZES = 'GET_SIZES';
 export const GET_ITEMS = 'GET_ITEMS';
