@@ -115,6 +115,22 @@ const MerchandiseItem = (props) => {
     return options;
   }
 
+  const getStretchCordColors = () => {
+    const stretchCordColors = [
+      'Green',
+      'Red',
+      'Blue',
+      'Black',
+      'Gray, for the MIGHTIEST of ALL!!!',
+    ];
+    const options = map(stretchCordColors, (color, i) => {
+      return (
+        <option key={i} value={color}>{color}</option>
+      );
+    });
+    return options;
+  }
+
   const handleChange = async (e, field) => {
     let valueId = parseInt(e.target.value);
     if(isNaN(valueId)) {
@@ -152,6 +168,15 @@ const MerchandiseItem = (props) => {
     props.amendOrder(props.item.id, {
       ...props.order[props.item.id],
       special: value,
+    });
+  }
+
+  const handleStretchCordSelect = (e) => {
+    let value = e.target.value;
+    console.log(value);
+    props.amendOrder(props.item.id, {
+      ...props.order[props.item.id],
+      color: value,
     });
   }
 
@@ -226,6 +251,15 @@ const MerchandiseItem = (props) => {
                 <Form.Label>Size/Color</Form.Label>
                 <Form.Control as='select' onChange={e => handleJumpRopeSelect(e)}>
                   {getJumpRopeSizeColors()}
+                </Form.Control>
+              </Form.Group>
+            }
+            {
+              props.item.itemTypeId === 4 &&
+              <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+                <Form.Label>Color</Form.Label>
+                <Form.Control as='select' onChange={e => handleStretchCordSelect(e)}>
+                  {getStretchCordColors()}
                 </Form.Control>
               </Form.Group>
             }

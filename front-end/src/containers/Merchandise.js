@@ -80,6 +80,7 @@ class Merchandise extends Component {
       20: {
         id: 20,
         qty: 0,
+        color: 'Green',
       },
       24: {
         id: 24,

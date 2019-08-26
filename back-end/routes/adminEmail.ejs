@@ -13,7 +13,12 @@
     <%for (let i = 0; i < order.length; i++) {%>
       <ul style="list-style: none;">
         <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Item:</span> <%=order[i].name %></li>
-        <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Size:</span> <%=order[i].size || order[i].special %></li>
+        <% if (order[i].size || order[i].special) {%>
+          <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Size:</span> <%=order[i].size || order[i].special %></li>
+        <%}%>
+        <% if (order[i].color) {%>
+          <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Color:</span> <%=order[i].color %></li>
+        <%}%>
         <li style="font-size: 22px; line-height: 40px;"><span style="font-weight: bold;">Qty:</span> <%=order[i].order.qty %></li>
       </ul>
     <%}%>
