@@ -45,6 +45,9 @@ class Review extends Component {
 
   }
   async handleSubmit() {
+    console.log(document.getElementById('exampleForm.ConrolInput4').checked);
+    const noRefundCheckBox = document.getElementById('exampleForm.ConrolInput4').checked;
+    const chargeAccountCheckBox = document.getElementById('exampleForm.ConrolInput5').checked;
     console.log(this.props.order);
     const order = this.getReviewItems();
     console.log(this.getReviewItems());
@@ -55,12 +58,15 @@ class Review extends Component {
       swimmerName: this.props.swimmer.name,
       poolName: this.props.pool[0].name,
       groupName: this.props.swimmer.groupName,
+      price: this.props.price,
       order,
     }
     if (name === '' || email === '' || phone === '') {
       alert('All fields must be filled.');
     } else if (!email.match(emailCheck)) {
       alert('Please enter a valid email address.');
+    } else if (!noRefundCheckBox || !chargeAccountCheckBox) {
+      alert('You must check the boxes.');
     } else {
       // const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
       const response = await this.props.SubmitOrderAction(orderPacket);
@@ -104,6 +110,18 @@ class Review extends Component {
               </Form.Group>
             </Col>
           </Form.Row>
+          <Form.Group controlId="exampleForm.ConrolInput4">
+            <Form.Check
+              required
+              label="I understand that there are no returns, refunds, or exchanges."
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ConrolInput5">
+            <Form.Check
+              required
+              label="I agree to have my account charged for today's purchases."
+            />
+          </Form.Group>
         </Form>
         <div className='submit-button'>
           <Button onClick={this.handleRestart.bind(this)} variant='outline-primary'>Start Over</Button>
