@@ -41,7 +41,7 @@ class Review extends Component {
   handleRestart() {
     this.props.RestartFormAction();
   }
-  handleSubmit() {
+  async handleSubmit() {
     console.log(this.props.order);
     const { email, name, phone } = this.state;
     const senderInfo = {
@@ -53,7 +53,12 @@ class Review extends Component {
     } else if (!email.match(emailCheck)) {
       alert('Please enter a valid email address.');
     } else {
-      this.props.SubmitOrderAction(senderInfo, this.props.order);
+      const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
+      console.log(response);
+      if (response.payload && response.payload.msg === 'orderSuccess') {
+        alert('Your order has been placed!');
+        document.location.reload(true); // reload page to start over
+      }
     }
   }
   render() {

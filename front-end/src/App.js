@@ -58,7 +58,7 @@ class App extends Component {
           </div>
         </div>
         <div className='merchandise-wrapper wrapper'>
-          {this.props.size[0] && !this.props.formComplete && <Merchandise />}
+          {this.props.size && this.props.size[0] && !this.props.formComplete && <Merchandise />}
           {this.props.formComplete && <Review />}
         </div>
       </div>
