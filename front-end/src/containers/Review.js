@@ -72,6 +72,7 @@ class Review extends Component {
     }
   }
   render() {
+    console.log(this.props.price);
     const reviewItemsArray = this.getReviewItems();
     return (
       <div>
@@ -121,6 +122,7 @@ const mapStateToProps = state => {
     items: state.data.items,
     pool: state.data.pool,
     group: state.data.group,
+    price: state.data.price,
   }
 }
 
