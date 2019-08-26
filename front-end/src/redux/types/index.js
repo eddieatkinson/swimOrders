@@ -11,4 +11,5 @@ export const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
 export const SET_SWIMMER = 'SET_SWIMMER';
 export const COMPLETE_FORM = 'COMPLETE_FORM';
+export const SET_PRICE = 'SET_PRICE';
 export const RESTART_FORM = 'RESTART_FORM';

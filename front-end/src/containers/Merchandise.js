@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button';
 
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import CompleteFormAction from '../redux/actions/CompleteFormAction';
+import SetPriceAction from '../redux/actions/SetPriceAction';
 
 import MerchandiseItem from '../components/MerchandiseItem';
 import { formatter } from '../utilities';
 
 class Merchandise extends Component {
   state = {
+    price: '',
     order: {
       1: {
         id: 1,
@@ -86,7 +88,7 @@ class Merchandise extends Component {
   }
 
   componentDidMount() {
-    this.props.GetItemsAction()
+    this.props.GetItemsAction();
   }
 
   amendOrder(itemId, merchandiseInfo) {
@@ -100,18 +102,23 @@ class Merchandise extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const price = document.getElementById('total-price').innerHTML;
+    console.log(price);
+    this.props.SetPriceAction(price);
     this.props.CompleteFormAction(this.state.order);
   }
 
   getPrice() {
     let basePrice = 0;
     forEach(this.state.order, (item, i) => {
-      if(item.qty) {
-        basePrice += item.qty * ((find(this.props.items, ['id', item.id])).price);
+      const thisItem = find(this.props.items, ['id', Math.floor(item.id)]);
+      if(item.qty && thisItem) {
+        const priceToUse = thisItem && item.size > 3 ? thisItem.adultPrice : thisItem.price;
+        basePrice += item.qty * priceToUse;
       }
     });
-    console.log(basePrice);
-    return formatter.format(basePrice);
+    const priceToReturn = formatter.format(basePrice);
+    return priceToReturn;
   }
 
   render() {
@@ -125,7 +132,7 @@ class Merchandise extends Component {
         <div className='submit-button'>
           <Button onClick={this.handleSubmit.bind(this)} type='submit'>Review & Submit</Button>
         </div>
-        <div className='running-total'>
+        <div id='total-price' className='running-total'>
           {this.getPrice()}
         </div>
       </div>
@@ -143,4 +150,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   GetItemsAction,
   CompleteFormAction,
+  SetPriceAction,
 })(Merchandise);
