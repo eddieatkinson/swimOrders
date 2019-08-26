@@ -28,7 +28,7 @@ class Merchandise extends Component {
       },
       4: {
         id: 4,
-        size: 1,
+        size: 4,
         qty: 0,
       },
       5: {
@@ -48,17 +48,17 @@ class Merchandise extends Component {
       },
       10: {
         id: 10,
-        size: 1,
+        size: 4,
         qty: 0,
       },
       11: {
         id: 11,
-        size: 1,
+        size: 4,
         qty: 0,
       },
       14: {
         id: 14,
-        size: 1,
+        size: 4,
         qty: 0,
       },
       15: {

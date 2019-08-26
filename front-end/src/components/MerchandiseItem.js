@@ -84,10 +84,19 @@ const MerchandiseItem = (props) => {
       break;
   }
   const getSizes = () => {
-    const options = map(props.sizes, (size) => {
-      return (
-        <option value={size.id} key={size.id}>{size.name}</option>
-      )
+    console.log(!!props.item.onlyAdult);
+    const options = map(props.sizes, (size, i) => {
+      if (!!props.item.onlyAdult) {
+        if (i > 2) {
+          return (
+            <option value={size.id} key={size.id}>{size.name}</option>
+          );
+        }
+      } else {
+        return (
+          <option value={size.id} key={size.id}>{size.name}</option>
+        );
+      }
     });
     return options;
   }
