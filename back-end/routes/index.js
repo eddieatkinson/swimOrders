@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
-const config = require('../config/config')
+const lodash = require('lodash');
+
+const config = require('../config/config');
 
 const { db, mail } = config;
 const connection = mysql.createConnection(db);
@@ -122,7 +124,31 @@ router.post('/updatesize', (req, res) => {
 
 router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
-  
+  console.log(req.body);
+  const { senderInfo, order } = req.body;
+  const { swimmerId, email, name, phone } = senderInfo;
+  const orderAsArray = lodash.values(order);
+  console.log(orderAsArray);
+  const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
+    VALUES
+    (?,?,?,?,?,?,?);`;
+  lodash.forEach(orderAsArray, (order, i) => {
+    if(order.qty !== 0) {
+      connection.query(insertOrder, [swimmerId, order.id, order.size, order.qty, email, phone, name], (error) => {
+        if(error) {
+          throw error;
+        } else {
+          console.log('order success');
+          res.json({
+            msg: 'orderSuccess',
+          });
+        }
+      })
+    }
+  })
+  // res.json({
+  //   msg: 'yay',
+  // });
 });
 
 module.exports = router;
