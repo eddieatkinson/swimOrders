@@ -193,6 +193,26 @@ const MerchandiseItem = (props) => {
     });
   }
 
+  const handleExtraJumpRopes = (e, newRowNum) => {
+    const newId = props.item.id + newRowNum/100;
+    let value = e.target.value;
+    props.amendOrder(newId, {
+      ...props.order[newId],
+      id: newId,
+      special: value,
+    });
+  }
+
+  const handleExtraStretchCords = (e, newRowNum) => {
+    const newId = props.item.id + newRowNum/100;
+    let value = e.target.value;
+    props.amendOrder(newId, {
+      ...props.order[newId],
+      id: newId,
+      color: value,
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
   }
@@ -210,12 +230,39 @@ const MerchandiseItem = (props) => {
     // console.log(merchForm);
     const formRow = 
       <Form.Row className='new-form-row'>
-        <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+        {/* <Form.Group as={Col} controlId="exampleForm.ControlInput1">
           <Form.Label>Size</Form.Label>
           <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
             {getSizes()}
           </Form.Control>
-        </Form.Group>
+        </Form.Group> */}
+          {
+            props.item.itemTypeId === 1 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Size</Form.Label>
+              <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
+                {getSizes()}
+              </Form.Control>
+            </Form.Group>
+          }
+          {
+            props.item.itemTypeId === 3 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Size/Color</Form.Label>
+              <Form.Control as='select' onChange={e => handleExtraJumpRopes(e, newRowNum)}>
+                {getJumpRopeSizeColors()}
+              </Form.Control>
+            </Form.Group>
+          }
+          {
+            props.item.itemTypeId === 4 &&
+            <Form.Group as={Col} controlId="exampleForm.ControlInput1">
+              <Form.Label>Color</Form.Label>
+              <Form.Control as='select' onChange={e => handleExtraStretchCords(e, newRowNum)}>
+                {getStretchCordColors()}
+              </Form.Control>
+            </Form.Group>
+          }
         <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
           <Form.Label>Qty</Form.Label>
           <Form.Control type='number' onChange={(e) => handleExtraSize(e, 'qty', newRowNum)} />
