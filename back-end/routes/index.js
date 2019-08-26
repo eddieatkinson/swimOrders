@@ -167,9 +167,41 @@ router.post('/submitorder', (req, res) => {
     });
   });
   console.log('order success!');
-  res.json({
-    msg: 'orderSuccess',
-  });
+  const ejsObjectAdmin = {
+    name,
+    swimmerName,
+    email,
+    poolName,
+    groupName,
+    phone,
+    order,
+  }
+  ejs.renderFile(__dirname + '/adminEmail.ejs', ejsObjectAdmin, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const mailToAdmin = {
+        from: 'New Order',
+        to: mail.user,
+        subject: `New Order for ${poolName} Pool`,
+        html: data,
+      };
+      transporter.sendMail(mailToAdmin, (err2) => {
+        if (err2) {
+          res.json({
+            msg: 'mailToAdminFail',
+          });
+        } else {
+          res.json({
+            msg: 'orderSuccess',
+          });
+        }
+      })
+    }
+  })
+  // res.json({
+  //   msg: 'orderSuccess',
+  // });
 });
 
 module.exports = router;
