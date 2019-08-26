@@ -104,12 +104,18 @@
 .running-total {
   position: -webkit-sticky;
   position: sticky;
+  border-radius: 50%;
   bottom: 100px;
   float: right;
-  height: 100px;
-  width: 100px;
-  background-color: #FFFFFFDD;
+  height: 120px;
+  width: 120px;
+  background-color: #F5CE2480;
   padding: 20px;
+  line-height: 70px;
+  text-align: center;
+  color: #000000aa;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* Review */
