@@ -132,23 +132,19 @@ router.post('/submitorder', (req, res) => {
   const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
     VALUES
     (?,?,?,?,?,?,?);`;
-  lodash.forEach(orderAsArray, (order, i) => {
+  lodash.forEach(orderAsArray, (order) => {
     if(order.qty !== 0) {
       connection.query(insertOrder, [swimmerId, order.id, order.size, order.qty, email, phone, name], (error) => {
         if(error) {
           throw error;
-        } else {
-          console.log('order success');
-          res.json({
-            msg: 'orderSuccess',
-          });
         }
       })
     }
-  })
-  // res.json({
-  //   msg: 'yay',
-  // });
+  });
+  console.log('order success!');
+  res.json({
+    msg: 'orderSuccess',
+  });
 });
 
 module.exports = router;
