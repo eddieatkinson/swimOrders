@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { map } from 'lodash';
+import { map, forEach, find } from 'lodash';
 import Button from 'react-bootstrap/Button';
 
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import CompleteFormAction from '../redux/actions/CompleteFormAction';
 
 import MerchandiseItem from '../components/MerchandiseItem';
+import { formatter } from '../utilities';
 
 class Merchandise extends Component {
   state = {
@@ -102,6 +103,17 @@ class Merchandise extends Component {
     this.props.CompleteFormAction(this.state.order);
   }
 
+  getPrice() {
+    let basePrice = 0;
+    forEach(this.state.order, (item, i) => {
+      if(item.qty) {
+        basePrice += item.qty * ((find(this.props.items, ['id', item.id])).price);
+      }
+    });
+    console.log(basePrice);
+    return formatter.format(basePrice);
+  }
+
   render() {
     return(
       <div>
@@ -112,6 +124,9 @@ class Merchandise extends Component {
         })}
         <div className='submit-button'>
           <Button onClick={this.handleSubmit.bind(this)} type='submit'>Review & Submit</Button>
+        </div>
+        <div className='running-total'>
+          {this.getPrice()}
         </div>
       </div>
     );

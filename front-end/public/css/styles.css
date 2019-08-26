@@ -101,6 +101,17 @@
   margin: 10px;
 }
 
+.running-total {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 100px;
+  float: right;
+  height: 100px;
+  width: 100px;
+  background-color: #FFFFFFDD;
+  padding: 20px;
+}
+
 /* Review */
 .category-label {
   font-weight: bold;
