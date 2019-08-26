@@ -125,21 +125,16 @@ router.post('/updatesize', (req, res) => {
 router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
   console.log(req.body);
-  const { senderInfo, order } = req.body;
-  const { swimmerId, email, name, phone } = senderInfo;
-  const orderAsArray = lodash.values(order);
-  console.log(orderAsArray);
+  const { swimmerId, email, name, phone, swimmerName, order } = req.body;
   const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
     VALUES
     (?,?,?,?,?,?,?);`;
-  lodash.forEach(orderAsArray, (order) => {
-    if(order.qty !== 0) {
-      connection.query(insertOrder, [swimmerId, order.id, order.size, order.qty, email, phone, name], (error) => {
-        if(error) {
-          throw error;
-        }
-      })
-    }
+  lodash.forEach(order, (order) => {
+    connection.query(insertOrder, [swimmerId, order.order.id, order.order.size, order.order.qty, email, phone, name], (error) => {
+      if(error) {
+        throw error;
+      }
+    });
   });
   console.log('order success!');
   res.json({

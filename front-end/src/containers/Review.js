@@ -41,23 +41,31 @@ class Review extends Component {
   handleRestart() {
     this.props.RestartFormAction();
   }
+  getSwimmerName() {
+
+  }
   async handleSubmit() {
     console.log(this.props.order);
+    const order = this.getReviewItems();
+    console.log(this.getReviewItems());
     const { email, name, phone } = this.state;
-    const senderInfo = {
+    const orderPacket = {
       ...this.state,
       swimmerId: this.props.swimmer.id,
+      swimmerName: this.props.swimmer.name,
+      order,
     }
     if (name === '' || email === '' || phone === '') {
       alert('All fields must be filled.');
     } else if (!email.match(emailCheck)) {
       alert('Please enter a valid email address.');
     } else {
-      const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
+      // const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
+      const response = await this.props.SubmitOrderAction(orderPacket);
       console.log(response);
       if (response.payload && response.payload.msg === 'orderSuccess') {
         alert('Your order has been placed!');
-        document.location.reload(true); // reload page to start over
+        // document.location.reload(true); // reload page to start over
       }
     }
   }
