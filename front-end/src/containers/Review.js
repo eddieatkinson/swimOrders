@@ -65,7 +65,7 @@ class Review extends Component {
       console.log(response);
       if (response.payload && response.payload.msg === 'orderSuccess') {
         alert('Your order has been placed!');
-        // document.location.reload(true); // reload page to start over
+        document.location.reload(true); // reload page to start over
       }
     }
   }
