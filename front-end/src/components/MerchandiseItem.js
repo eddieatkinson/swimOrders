@@ -207,7 +207,7 @@ const MerchandiseItem = (props) => {
     return prices;
   }
 
-  const disabled = props.order[props.item.id].size === 'notChosen' || props.order[props.item.id].special || props.order[props.item.id].color; 
+  const disabled = props.order[props.item.id].size === 'notChosen' || props.order[props.item.id].special === 'notChosen' || props.order[props.item.id].color === 'notChosen'; 
   console.log(props.order[props.item.id]);
   console.log(props.order);
 
