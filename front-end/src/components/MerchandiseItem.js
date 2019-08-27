@@ -84,7 +84,6 @@ const MerchandiseItem = (props) => {
       break;
   }
   const getSizes = () => {
-    console.log(!!props.item.onlyAdult);
     const options = map(props.sizes, (size, i) => {
       if (!!props.item.onlyAdult) {
         if (i > 2) {
@@ -141,21 +140,6 @@ const MerchandiseItem = (props) => {
     } else if (field === 'qty') {
       await setQty(valueId);
     }
-    // if(!props.order[props.item.id]) {
-    //   await props.amendOrder(props.item.id, {
-    //     size: 1,
-    //     qty: 0,
-    //   });
-    //   props.amendOrder(props.item.id, {
-    //     ...props.order[props.item.id],
-    //     [field]: valueId,
-    //   });
-    // } else {
-      // props.amendOrder(props.item.id, {
-      //   ...props.order[props.item.id],
-      //   [field]: valueId,
-      // });
-    // }
     props.amendOrder(props.item.id, {
       ...props.order[props.item.id],
       [field]: valueId,
@@ -223,24 +207,27 @@ const MerchandiseItem = (props) => {
     return prices;
   }
 
-  // console.log(props.item);
+  const disabled = props.order[props.item.id].size === 'notChosen' || props.order[props.item.id].special || props.order[props.item.id].color; 
+  console.log(props.order[props.item.id]);
+  console.log(props.order);
+
+  const selectionSectionTitle = (props.order[props.item.id].size && 'size') || (props.order[props.item.id].special && 'size/color') || (props.order[props.item.id].color && 'color');
+  const placeholder = disabled && `Please select a ${selectionSectionTitle} first.`;
 
   const getFormRow = (newRowNum) => {
-    // const merchForm = document.getElementById('merch-form');
-    // console.log(merchForm);
+    const newId = props.item.id + newRowNum/100;
+    const disabledNew = props.order[newId] && (!props.order[newId].size || !props.order[newId].special || !props.order[newId].color);
+    const selectionSectionTitleNew = props.order[props.item.id] && ((props.order[props.item.id].size && 'size') || (props.order[props.item.id].special && 'size/color') || (props.order[props.item.id].color && 'color'));
+    const placeholderNew = !disabledNew && `Please select a ${selectionSectionTitleNew} first.`;
+    
     const formRow = 
       <Form.Row className='new-form-row'>
-        {/* <Form.Group as={Col} controlId="exampleForm.ControlInput1">
-          <Form.Label>Size</Form.Label>
-          <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
-            {getSizes()}
-          </Form.Control>
-        </Form.Group> */}
           {
             props.item.itemTypeId === 1 &&
             <Form.Group as={Col} controlId="exampleForm.ControlInput1">
               <Form.Label>Size</Form.Label>
               <Form.Control as='select' onChange={(e) => handleExtraSize(e, 'size', newRowNum)}>
+                <option selected disabled>Select size...</option>
                 {getSizes()}
               </Form.Control>
             </Form.Group>
@@ -250,6 +237,7 @@ const MerchandiseItem = (props) => {
             <Form.Group as={Col} controlId="exampleForm.ControlInput1">
               <Form.Label>Size/Color</Form.Label>
               <Form.Control as='select' onChange={e => handleExtraJumpRopes(e, newRowNum)}>
+                <option selected disabled>Select size/color...</option>
                 {getJumpRopeSizeColors()}
               </Form.Control>
             </Form.Group>
@@ -259,18 +247,18 @@ const MerchandiseItem = (props) => {
             <Form.Group as={Col} controlId="exampleForm.ControlInput1">
               <Form.Label>Color</Form.Label>
               <Form.Control as='select' onChange={e => handleExtraStretchCords(e, newRowNum)}>
+                <option selected disabled>Select color...</option>
                 {getStretchCordColors()}
               </Form.Control>
             </Form.Group>
           }
         <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
           <Form.Label>Qty</Form.Label>
-          <Form.Control type='number' onChange={(e) => handleExtraSize(e, 'qty', newRowNum)} />
+          <Form.Control disabled={!disabledNew} placeholder={placeholderNew} type='number' onChange={(e) => handleExtraSize(e, 'qty', newRowNum)} />
         </Form.Group>
         <div className='add-circle'><MdAddCircle style={{visibility: 'hidden'}} size='30px' /></div>
       </Form.Row>
     return formRow;
-    // merchForm.appendChild(formRow);
   }
 
   return (
@@ -288,6 +276,7 @@ const MerchandiseItem = (props) => {
               <Form.Group as={Col} controlId="exampleForm.ControlInput1">
                 <Form.Label>Size</Form.Label>
                 <Form.Control as='select' onChange={(e) => handleChange(e, 'size')}>
+                  <option selected disabled>Select size...</option>
                   {getSizes()}
                 </Form.Control>
               </Form.Group>
@@ -297,6 +286,7 @@ const MerchandiseItem = (props) => {
               <Form.Group as={Col} controlId="exampleForm.ControlInput1">
                 <Form.Label>Size/Color</Form.Label>
                 <Form.Control as='select' onChange={e => handleJumpRopeSelect(e)}>
+                  <option selected disabled>Select size/color...</option>
                   {getJumpRopeSizeColors()}
                 </Form.Control>
               </Form.Group>
@@ -306,13 +296,14 @@ const MerchandiseItem = (props) => {
               <Form.Group as={Col} controlId="exampleForm.ControlInput1">
                 <Form.Label>Color</Form.Label>
                 <Form.Control as='select' onChange={e => handleStretchCordSelect(e)}>
+                  <option selected disabled>Select color...</option>
                   {getStretchCordColors()}
                 </Form.Control>
               </Form.Group>
             }
             <Form.Group as={Col}  controlId="exampleForm.ControlInput2">
               <Form.Label>Qty</Form.Label>
-              <Form.Control type='number' onChange={(e) => handleChange(e, 'qty')} />
+              <Form.Control placeholder={placeholder} disabled={disabled} type='number' onChange={(e) => handleChange(e, 'qty')} />
             </Form.Group>
             <div className='add-circle'>
               {
