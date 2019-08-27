@@ -73,7 +73,6 @@ class Review extends Component {
       this.setState({
         submitDisabled: true,
       });
-      // const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
       const response = await this.props.SubmitOrderAction(orderPacket);
       console.log(response);
       if (response.payload && response.payload.msg === 'orderSuccess') {
