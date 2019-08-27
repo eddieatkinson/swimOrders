@@ -156,11 +156,11 @@ router.post('/submitorder', (req, res) => {
   console.log('SUBMITTING ORDER...');
   console.log(req.body);
   const { swimmerId, email, name, phone, swimmerName, order, poolName, groupName, swimmerSize, price } = req.body;
-  const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName)
+  const insertOrder = `INSERT INTO orders (swimmerId, itemId, sizeId, qty, email, phone, parentName, color, special)
     VALUES
-    (?,?,?,?,?,?,?);`;
+    (?,?,?,?,?,?,?,?,?);`;
   lodash.forEach(order, (order) => {
-    connection.query(insertOrder, [swimmerId, order.order.id, order.order.size, order.order.qty, email, phone, name], (error) => {
+    connection.query(insertOrder, [swimmerId, order.order.id, order.order.size, order.order.qty, email, phone, name, order.color, order.special], (error) => {
       if(error) {
         throw error;
       }
