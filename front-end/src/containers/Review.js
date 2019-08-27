@@ -18,6 +18,7 @@ class Review extends Component {
     email: '',
     name: '',
     phone: '',
+    submitDisabled: false,
   }
   getReviewItems() {
     const reviewItemsArray = [];
@@ -69,12 +70,20 @@ class Review extends Component {
     } else if (!noRefundCheckBox || !chargeAccountCheckBox) {
       alert('You must check the boxes.');
     } else {
+      this.setState({
+        submitDisabled: true,
+      });
       // const response = await this.props.SubmitOrderAction(senderInfo, this.props.order);
       const response = await this.props.SubmitOrderAction(orderPacket);
       console.log(response);
       if (response.payload && response.payload.msg === 'orderSuccess') {
         alert('Your order has been placed!');
         document.location.reload(true); // reload page to start over
+      } else {
+        alert('An error has occurred.');
+        this.setState({
+          submitDisabled: false,
+        });
       }
     }
   }
@@ -129,7 +138,7 @@ class Review extends Component {
         </Form>
         <div className='submit-button'>
           <Button onClick={this.handleRestart.bind(this)} variant='outline-primary'>Start Over</Button>
-          <Button onClick={this.handleSubmit.bind(this)} type='submit'>Submit</Button>
+          <Button disabled={this.state.submitDisabled} onClick={this.handleSubmit.bind(this)} type='submit'>{this.state.submitDisabled ? 'Submitting...' : 'Submit'}</Button>
         </div>
       </div>
     );
