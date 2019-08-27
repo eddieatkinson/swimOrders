@@ -3,6 +3,12 @@
   width: 80%;
 }
 
+@media only screen and (max-width: 1223px) {
+  .wrapper {
+    width: 90%;
+  }
+}
+
 .top-fields-wrapper {
   /* height: 180px; */
 }
@@ -79,6 +85,12 @@
   padding: 100px;
   text-align: center;
   /* background-color: aquamarine; */
+}
+
+@media only screen and (max-width: 1223px) {
+  .merchandise-else {
+    padding: 100px 10px;
+  }
 }
 
 .add-circle {
