@@ -41,9 +41,6 @@ const ReviewItem = props => {
     case 8:
       src = pic8;
       break;
-    case 8:
-      src = pic8;
-      break;
     case 10:
       src = pic10;
       break;
