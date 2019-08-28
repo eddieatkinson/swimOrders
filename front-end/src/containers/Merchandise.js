@@ -117,7 +117,6 @@ class Merchandise extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const price = document.getElementById('total-price').innerHTML;
-    console.log(price);
     this.props.SetPriceAction(price);
     this.props.CompleteFormAction(this.state.order);
   }
@@ -136,7 +135,6 @@ class Merchandise extends Component {
   }
 
   render() {
-    console.log(this.state.order);
     return(
       <div>
         {map(this.props.items, (item, i) => {

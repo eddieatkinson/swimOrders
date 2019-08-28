@@ -41,19 +41,13 @@ class PoolSwimmer extends Component {
 
   handleChange(event, field, id) {
     const thingId = parseInt(event.target.value)
-    // const { selectedIndex } = document.getElementById(id);
-    // const indexCorrection = field === 'size' ? 0 : -1
-    // const thingOfInterest = this.props[field+'s'][selectedIndex + indexCorrection];
-    // console.log(this.props[field+'s']);
     const thingOfInterest = find(this.props[field+'s'], ['id', thingId]);
-    // console.log(thingOfInterest);
     this.setState({
       [field]: thingOfInterest,
     });
     field === 'pool' && this.props.GetSwimmersAction(thingId);
     field === 'pool' && this.props.GetPoolAction(thingId);
     field === 'swimmer' && this.props.GetSizeAction(thingOfInterest.usedSizeId);
-    // field === 'swimmer' && this.props.GetGroupAction(thingOfInterest.groupId);
     field === 'swimmer' && this.props.SetSwimmerAction(thingOfInterest);
   }
 
@@ -166,7 +160,6 @@ class PoolSwimmer extends Component {
   }
 
   render() {
-    console.log(this.props.size);
     const poolDropdownId = "exampleForm.ControlSelect1";
     return(
       <div className='pool-swimmer-container'>
