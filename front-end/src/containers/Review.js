@@ -46,12 +46,9 @@ class Review extends Component {
 
   }
   async handleSubmit() {
-    console.log(document.getElementById('exampleForm.ConrolInput4').checked);
     const noRefundCheckBox = document.getElementById('exampleForm.ConrolInput4').checked;
     const chargeAccountCheckBox = document.getElementById('exampleForm.ConrolInput5').checked;
-    console.log(this.props.order);
     const order = this.getReviewItems();
-    console.log(this.getReviewItems());
     const { email, name, phone } = this.state;
     const orderPacket = {
       ...this.state,
@@ -74,7 +71,6 @@ class Review extends Component {
         submitDisabled: true,
       });
       const response = await this.props.SubmitOrderAction(orderPacket);
-      console.log(response);
       if (response.payload && response.payload.msg === 'orderSuccess') {
         alert('Your order has been placed!');
         document.location.reload(true); // reload page to start over
@@ -87,7 +83,6 @@ class Review extends Component {
     }
   }
   render() {
-    console.log(this.props.order);
     const reviewItemsArray = this.getReviewItems();
     return (
       <div>

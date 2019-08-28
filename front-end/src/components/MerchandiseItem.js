@@ -52,9 +52,6 @@ const MerchandiseItem = (props) => {
     case 8:
       src = pic8;
       break;
-    case 8:
-      src = pic8;
-      break;
     case 10:
       src = pic10;
       break;
@@ -84,7 +81,12 @@ const MerchandiseItem = (props) => {
       break;
   }
   const getSizes = () => {
-    const options = map(props.sizes, (size, i) => {
+    const sizesArrayCopy = [...props.sizes];
+    const lastElement = sizesArrayCopy.pop();
+    if (props.item.id === 3) {
+      sizesArrayCopy.splice(3, 0, lastElement);
+    }
+    const options = map(sizesArrayCopy, (size, i) => {
       if (!!props.item.onlyAdult) {
         if (i > 2) {
           return (
@@ -148,7 +150,6 @@ const MerchandiseItem = (props) => {
 
   const handleJumpRopeSelect = (e) => {
     let value = e.target.value;
-    console.log(value);
     props.amendOrder(props.item.id, {
       ...props.order[props.item.id],
       special: value,
@@ -157,7 +158,6 @@ const MerchandiseItem = (props) => {
 
   const handleStretchCordSelect = (e) => {
     let value = e.target.value;
-    console.log(value);
     props.amendOrder(props.item.id, {
       ...props.order[props.item.id],
       color: value,
@@ -208,8 +208,6 @@ const MerchandiseItem = (props) => {
   }
 
   const disabled = props.order[props.item.id].size === 'notChosen' || props.order[props.item.id].special === 'notChosen' || props.order[props.item.id].color === 'notChosen'; 
-  console.log(props.order[props.item.id]);
-  console.log(props.order);
 
   const selectionSectionTitle = (props.order[props.item.id].size && 'size') || (props.order[props.item.id].special && 'size/color') || (props.order[props.item.id].color && 'color');
   const placeholder = disabled && `Please select a ${selectionSectionTitle} first.`;
