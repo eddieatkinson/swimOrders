@@ -93,6 +93,19 @@
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .merchandise-pic img {
+    height: 100px;
+  }
+  .merchandise-name {
+    padding: 5px;
+    font-size: 16px;
+  }
+  .price-text {
+    font-size: 16px;
+  }
+}
+
 .add-circle {
   /* flex: 1; */
   text-align: center;
