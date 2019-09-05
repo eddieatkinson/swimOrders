@@ -5,3 +5,4 @@ export const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export const emailCheck = (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/);
+export const secretName = 'login';
