@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Form from './containers/Form';
 import GetPoolsAction from './redux/actions/GetPoolsAction';
 import Navbar from './components/Navbar';
@@ -9,6 +10,8 @@ import Review from './containers/Review';
 
 import { secretName } from './utilities';
 import Login from './containers/Login';
+
+import tooLateGif from './assets/tooLateGif.gif';
 
 class App extends Component {
   state = {
@@ -39,13 +42,13 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
-    document.addEventListener("keydown", this.detectKeys.bind(this));
-  }
+  // componentDidMount(){
+  //   document.addEventListener("keydown", this.detectKeys.bind(this));
+  // }
 
-  componentWillUnmount(){
-    document.removeEventListener("keydown", this.detectKeys.bind(this));
-  }
+  // componentWillUnmount(){
+  //   document.removeEventListener("keydown", this.detectKeys.bind(this));
+  // }
 
   getScreen() {
     const screen = this.state.next ? <Review handleSubmit={this.handleSubmit.bind(this)} /> : <Form handleReview={this.handleReview.bind(this)} />;
@@ -74,27 +77,42 @@ class App extends Component {
   }
 
   getMain() {
-    const main = this.state.showLogin ? (
-      <div>
-        <div className='top-fields'>
-          <Navbar />
-        </div>
-        <Login />
-      </div>
-    ) : (
-      <div>
-        <div className='top-fields-wrapper'>
+    const now = moment();
+    const isAfterTime = now.isSameOrAfter('2019-09-07');
+    let main;
+    if (this.state.showLogin) {
+      main = 
+        <div>
           <div className='top-fields'>
             <Navbar />
-            <PoolSwimmer />
           </div>
-        </div>
-        <div className='merchandise-wrapper wrapper'>
-          {this.props.size && this.props.size[0] && !this.props.formComplete && <Merchandise />}
-          {this.props.formComplete && <Review />}
-        </div>
-      </div>
-    );
+          <Login />
+        </div>;
+    } else if (isAfterTime) {
+      main =
+        <div>
+          <div className='top-fields'>
+            <Navbar />
+          </div>
+          <div>
+            <img className='too-late' src={tooLateGif} alt='too late' />
+          </div>
+      </div>;
+    } else {
+      main = 
+        <div>
+          <div>
+            <div className='top-fields'>
+              <Navbar />
+              <PoolSwimmer />
+            </div>
+          </div>
+          <div className='merchandise-wrapper wrapper'>
+            {this.props.size && this.props.size[0] && !this.props.formComplete && <Merchandise />}
+            {this.props.formComplete && <Review />}
+          </div>
+        </div>;
+    }
 
     return main;
   }
