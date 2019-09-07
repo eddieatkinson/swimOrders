@@ -3,20 +3,22 @@
   width: 80%;
 }
 
+.too-late {
+  margin: 100px auto;
+  display: block;
+}
+
 @media only screen and (max-width: 1223px) {
   .wrapper {
     width: 90%;
   }
-}
-
-.top-fields-wrapper {
-  /* height: 180px; */
+  .too-late {
+    margin: 20px auto;
+  }
 }
 
 .top-fields {
-  /* position: fixed; */
   width: 100%;
-  /* height: 140px; */
 }
 
 /* Navbar */
