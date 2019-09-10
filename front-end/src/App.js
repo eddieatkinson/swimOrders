@@ -42,13 +42,13 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   document.addEventListener("keydown", this.detectKeys.bind(this));
-  // }
+  componentDidMount(){
+    document.addEventListener("keydown", this.detectKeys.bind(this));
+  }
 
-  // componentWillUnmount(){
-  //   document.removeEventListener("keydown", this.detectKeys.bind(this));
-  // }
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.detectKeys.bind(this));
+  }
 
   getScreen() {
     const screen = this.state.next ? <Review handleSubmit={this.handleSubmit.bind(this)} /> : <Form handleReview={this.handleReview.bind(this)} />;
