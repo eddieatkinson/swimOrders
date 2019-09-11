@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import LoginAction from '../redux/actions/LoginAction';
 
 class Login extends Component {
   state = {
@@ -10,16 +13,28 @@ class Login extends Component {
       [field]: value,
     });
   }
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.LoginAction(this.state);
+  }
   render() {
-    console.log(this.state);
+    console.log(this.props.message);
     return (
       <form>
         <input onChange={(e) => this.handleChange(e.target.value, 'email')} type='text' />
         <input onChange={(e) => this.handleChange(e.target.value, 'password')} type='text' />
-        <button>Submit</button>
+        <button onClick={(e) => this.handleSubmit(e)}>Submit</button>
       </form>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    message: state.auth.message,
+  }
+}
+
+export default connect(mapStateToProps, {
+  LoginAction,
+})(Login);

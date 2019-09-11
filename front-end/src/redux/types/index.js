@@ -6,6 +6,9 @@ export const GET_SIZE = 'GET_SIZE';
 export const GET_SIZES = 'GET_SIZES';
 export const GET_ITEMS = 'GET_ITEMS';
 
+export const REGISTER_USER = 'REGISTER_USER';
+export const LOGIN_USER = 'LOGIN_USER';
+
 export const UPDATE_SIZE_ACTION = 'UPDATE_SIZE_ACTION';
 export const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
