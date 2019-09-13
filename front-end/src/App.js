@@ -8,7 +8,7 @@ import PoolSwimmer from './containers/PoolSwimmer';
 import Merchandise from './containers/Merchandise';
 import Review from './containers/Review';
 
-import { secretName } from './utilities';
+import { secretName, signInSuccess } from './utilities';
 import Login from './containers/Login';
 
 import tooLateGif from './assets/tooLateGif.gif';
@@ -42,13 +42,13 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   document.addEventListener("keydown", this.detectKeys.bind(this));
-  // }
+  componentDidMount(){
+    document.addEventListener("keydown", this.detectKeys.bind(this));
+  }
 
-  // componentWillUnmount(){
-  //   document.removeEventListener("keydown", this.detectKeys.bind(this));
-  // }
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.detectKeys.bind(this));
+  }
 
   getScreen() {
     const screen = this.state.next ? <Review handleSubmit={this.handleSubmit.bind(this)} /> : <Form handleReview={this.handleReview.bind(this)} />;
@@ -80,20 +80,19 @@ class App extends Component {
     const now = moment();
     const isAfterTime = now.isSameOrAfter('2019-09-07');
     let main;
-    if (this.state.showLogin) {
+    if (this.props.message === signInSuccess) {
+      main =
+        <div>
+          You are logged in!
+        </div>
+    } else if (this.state.showLogin) {
       main = 
         <div>
-          <div className='top-fields'>
-            <Navbar />
-          </div>
           <Login />
         </div>;
     } else if (isAfterTime) {
       main =
         <div>
-          <div className='top-fields'>
-            <Navbar />
-          </div>
           <div>
             <img className='too-late' src={tooLateGif} alt='too late' />
           </div>
@@ -101,12 +100,6 @@ class App extends Component {
     } else {
       main = 
         <div>
-          <div>
-            <div className='top-fields'>
-              <Navbar />
-              <PoolSwimmer />
-            </div>
-          </div>
           <div className='merchandise-wrapper wrapper'>
             {this.props.size && this.props.size[0] && !this.props.formComplete && <Merchandise />}
             {this.props.formComplete && <Review />}
@@ -118,17 +111,28 @@ class App extends Component {
   }
 
   render() {
+    const now = moment();
+    const isAfterTime = now.isSameOrAfter('2019-09-07');
+
     return (
-      this.getMain()
+      <div>
+        <div className='top-fields'>
+          <Navbar />
+          {!isAfterTime && !this.props.isLoggedIn && !this.state.showLogin && <PoolSwimmer />}
+        </div>
+        {this.getMain()}
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
+    isLoggedIn: state.auth.isLoggedIn,
     size: state.data.size,
     formComplete: state.data.formComplete,
     order: state.data.order,
+    message: state.auth.message,
   }
 }
 

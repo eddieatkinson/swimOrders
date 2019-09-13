@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const lodash = require('lodash');
+const bcrypt = require('bcrypt-nodejs');
 
 const config = require('../config/config');
 
@@ -226,10 +227,53 @@ router.post('/submitorder', (req, res) => {
         }
       })
     }
-  })
-  // res.json({
-  //   msg: 'orderSuccess',
-  // });
+  });
+});
+
+router.post('/registeruser', (req, res) => {
+  console.log('REGISTERING USER...');
+  const { email, password } = req.body;
+  const hash = bcrypt.hashSync(password);
+  const insertUser = `INSERT INTO users (email, password)
+    VALUES
+    (?,?);`;
+  connection.query(insertUser, [email, hash], (error) => {
+    if (error) {
+      throw error;
+    } else {
+      res.json({
+        msg: 'registerUserSuccess',
+      });
+    }
+  });
+});
+
+router.post('/login', function(req, res) {
+  console.log('LOGGING IN...');
+  console.log(req.body);
+  const { email, password } = req.body;
+  const checkUser = `SELECT * FROM users
+    WHERE email = ?`;
+  connection.query(checkUser, [email], (error, results) => {
+    if (error) {
+      throw error;
+    } else if (results.length === 0) {
+      res.json({
+        msg: 'badLogin',
+      });
+    } else {
+      const checkHash = bcrypt.compareSync(password, results[0].password);
+      if (checkHash) {
+        res.json({
+          msg: 'signInSuccess',
+        });
+      } else {
+        res.json({
+          msg: 'badPassword',
+        });
+      }
+    }
+  });
 });
 
 module.exports = router;
