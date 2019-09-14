@@ -5,6 +5,7 @@ export const GET_GROUP = 'GET_GROUP';
 export const GET_SIZE = 'GET_SIZE';
 export const GET_SIZES = 'GET_SIZES';
 export const GET_ITEMS = 'GET_ITEMS';
+export const GET_ORDERS = 'GET_ORDERS';
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
