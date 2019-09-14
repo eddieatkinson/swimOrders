@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table';
+import MaterialTable from 'material-table';
 import { map, forEach } from 'lodash';
 
 import GetOrdersAction from '../redux/actions/GetOrdersAction';
@@ -49,14 +50,11 @@ class Orders extends Component {
           poolName = pool.name;
         }
       });
-      return (
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{swimmer.name}</td>
-          <td>{poolName}</td>
-          <td>{formatter.format(this.getOrderTotal(swimmer.id))}</td>
-        </tr>
-      )
+      return ({
+        name: swimmer.name,
+        pool: poolName,
+        total: this.getOrderTotal(swimmer.id),
+      });
     });
     return tableContents;
   }
@@ -64,19 +62,20 @@ class Orders extends Component {
   render() {
     return (
       <div className='swimmers-table'>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Number</th>
-              <th>Name</th>
-              <th>Pool</th>
-              <th>Order Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.getTableContents()}
-          </tbody>
-        </Table>
+        <MaterialTable
+          columns={[
+            { title: 'Name', field: 'name' },
+            { title: 'Pool', field: 'pool' },
+            { title: 'Order total', field: 'total', type:'currency' },
+          ]}
+          title='Swimmer Order Totals'
+          data={this.getTableContents()}
+          options={{
+            search: true,
+            pageSize: 10,
+            pageSizeOptions: [10, 25, 100],
+          }}
+        />
       </div>
     );
   }
