@@ -89,6 +89,19 @@ router.get('/getswimmers/:poolId', (req, res) => {
   });
 });
 
+router.get('/getallswimmers', (req, res) => {
+  console.log('Getting ALL swimmers...');
+  const selectionQuery = `SELECT * FROM swimmers;`;
+  connection.query(selectionQuery, [], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
 router.get('/getsize/:sizeId', (req, res) => {
   console.log('Getting size...');
   const { sizeId } = req.params;

@@ -44,6 +44,13 @@
   text-align: center;
 }
 
+/* Logged In */
+.swimmers-table {
+  width: 80%;
+  padding: 20px;
+  margin: auto;
+}
+
 /* Navbar */
 .navbar-container {
   background-color: #000;

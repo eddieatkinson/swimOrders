@@ -13,6 +13,7 @@ import {
   GET_GROUP,
   SET_PRICE,
   GET_ORDERS,
+  GET_ALL_SWIMMERS,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   pool: [],
   group: [],
   swimmers: [],
+  allSwimmers: [],
   swimmer: {},
   size: [],
   sizes: [],
@@ -45,6 +47,8 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, sizes: action.payload}
     case GET_SWIMMERS:
       return {...state, swimmers: action.payload}
+    case GET_ALL_SWIMMERS:
+      return {...state, allSwimmers: action.payload}
     case GET_SIZE:
       return {...state, size: action.payload}
     case GET_ITEMS:
