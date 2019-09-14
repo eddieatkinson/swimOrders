@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import MaterialTable from 'material-table';
-import { map, forEach } from 'lodash';
+import { map, forEach, uniqBy } from 'lodash';
 
 import GetOrdersAction from '../redux/actions/GetOrdersAction';
-import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
+import GetAllSwimmersAction from '../redux/actions/GetAllSwimmersAction';
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import { formatter } from '../utilities';
@@ -13,7 +13,7 @@ import { formatter } from '../utilities';
 class Orders extends Component {
   componentDidMount() {
     this.props.GetOrdersAction();
-    this.props.GetSwimmersAction();
+    this.props.GetAllSwimmersAction();
     this.props.GetPoolsAction();
     this.props.GetItemsAction();
   }
@@ -94,7 +94,7 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   GetOrdersAction,
-  GetSwimmersAction,
+  GetAllSwimmersAction,
   GetPoolsAction,
   GetItemsAction,
 })(Orders);

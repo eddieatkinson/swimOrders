@@ -9,6 +9,7 @@ import PoolSwimmer from './containers/PoolSwimmer';
 import Merchandise from './containers/Merchandise';
 import Review from './containers/Review';
 import Orders from './containers/Orders';
+import JumpStretchCaps from './containers/JumpStretchCaps';
 import Login from './containers/Login';
 
 import { secretName, signInSuccess } from './utilities';
@@ -86,6 +87,7 @@ class App extends Component {
     if (1) {
       main =
         <div>
+          <JumpStretchCaps />
           <Orders />
         </div>
     } else if (this.state.showLogin) {
