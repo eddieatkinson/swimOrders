@@ -10,7 +10,7 @@ import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import { formatter } from '../utilities';
 
-class Orders extends Component {
+class JumpStretchCaps extends Component {
   componentDidMount() {
     this.props.GetOrdersAction();
     this.props.GetSwimmersAction();
@@ -51,8 +51,7 @@ class Orders extends Component {
         }
       });
       return ({
-        first: swimmer.firstName,
-        last: swimmer.lastName,
+        name: swimmer.name,
         pool: poolName,
         total: this.getOrderTotal(swimmer.id),
       });
@@ -65,9 +64,8 @@ class Orders extends Component {
       <div className='swimmers-table'>
         <MaterialTable
           columns={[
-            { title: 'First Name', field: 'first' },
-            { title: 'Last Name', field: 'last' },
             { title: 'Pool', field: 'pool' },
+            { title: 'Practice Group', field: 'group' },
             { title: 'Order total', field: 'total', type:'currency' },
           ]}
           title='Swimmer Order Totals'
@@ -97,4 +95,4 @@ export default connect(mapStateToProps, {
   GetSwimmersAction,
   GetPoolsAction,
   GetItemsAction,
-})(Orders);
+})(JumpStretchCaps);
