@@ -17,7 +17,6 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_USER:
       return {...state}
     case LOGIN_USER:
-      console.log(action);
       return {...state, message: action.payload}
     default:
       return state;

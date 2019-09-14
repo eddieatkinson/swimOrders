@@ -62,12 +62,37 @@ router.get('/getsizes', (req, res) => {
   });
 });
 
+router.get('/getorders', (req, res) => {
+  console.log('Getting orders...');
+  const selectionQuery = `SELECT * FROM orders;`;
+  connection.query(selectionQuery, [], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 router.get('/getswimmers/:poolId', (req, res) => {
   console.log('Getting swimmers...');
   const { poolId } = req.params;
   const selectionQuery = `SELECT * FROM swimmers
     WHERE poolId = ?;`;
   connection.query(selectionQuery, [poolId], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+});
+
+router.get('/getallswimmers', (req, res) => {
+  console.log('Getting ALL swimmers...');
+  const selectionQuery = `SELECT * FROM swimmers;`;
+  connection.query(selectionQuery, [], (error, results) => {
     if (error) {
       throw error;
     } else {

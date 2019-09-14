@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+
 import Form from './containers/Form';
 import GetPoolsAction from './redux/actions/GetPoolsAction';
 import Navbar from './components/Navbar';
 import PoolSwimmer from './containers/PoolSwimmer';
 import Merchandise from './containers/Merchandise';
 import Review from './containers/Review';
+import Orders from './containers/Orders';
+import Login from './containers/Login';
 
 import { secretName, signInSuccess } from './utilities';
-import Login from './containers/Login';
 
 import tooLateGif from './assets/tooLateGif.gif';
 
@@ -83,7 +85,7 @@ class App extends Component {
     if (this.props.message === signInSuccess) {
       main =
         <div>
-          You are logged in!
+          <Orders />
         </div>
     } else if (this.state.showLogin) {
       main = 
