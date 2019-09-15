@@ -35,7 +35,7 @@ class Orders extends Component {
   getOrderTotal(swimmerId) {
     let orderTotal = 0;
     forEach(this.props.orders, (order) => {
-      if(order.swimmerId === swimmerId) {
+      if(order.deleted === 0 && order.swimmerId === swimmerId) {
         orderTotal += this.getItemPrice(order.itemId, order.sizeId, order.qty);
       }
     });
