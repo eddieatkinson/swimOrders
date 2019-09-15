@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Table from 'react-bootstrap/Table';
 import MaterialTable from 'material-table';
-import { map, forEach, uniqBy } from 'lodash';
+import { map, forEach } from 'lodash';
 
 import GetOrdersAction from '../redux/actions/GetOrdersAction';
 import GetAllSwimmersAction from '../redux/actions/GetAllSwimmersAction';
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetItemsAction from '../redux/actions/GetItemsAction';
-import { formatter } from '../utilities';
 
 class Orders extends Component {
   componentDidMount() {
@@ -43,19 +41,29 @@ class Orders extends Component {
   }
 
   getTableContents() {
-    const tableContents = map(this.props.allSwimmers, (swimmer, i) => {
+    const tableContents = []
+    forEach(this.props.allSwimmers, (swimmer, i) => {
       let poolName;
       forEach(this.props.pools, (pool) => {
         if(swimmer.poolId === pool.id) {
           poolName = pool.name;
         }
       });
-      return ({
-        first: swimmer.firstName,
-        last: swimmer.lastName,
-        pool: poolName,
-        total: this.getOrderTotal(swimmer.id),
-      });
+      const total = this.getOrderTotal(swimmer.id);
+      if (total) {
+        tableContents.push({
+          first: swimmer.firstName,
+          last: swimmer.lastName,
+          pool: poolName,
+          total,
+        });
+      }
+      // return ({
+      //   first: swimmer.firstName,
+      //   last: swimmer.lastName,
+      //   pool: poolName,
+      //   total: this.getOrderTotal(swimmer.id),
+      // });
     });
     return tableContents;
   }

@@ -121,12 +121,25 @@ class JumpStretchCaps extends Component {
     return totalForGroup;
   }
 
+  shouldIAdd(dataToAdd) {
+    if (this.props.itemId === 19) {
+      return dataToAdd.small || dataToAdd.medium || dataToAdd.large;
+    } else if (this.props.itemId === 20) {
+      return dataToAdd.green || dataToAdd.red || dataToAdd.blue || dataToAdd.black || dataToAdd.gray;
+    } else if (this.props.itemId === 15) {
+      return dataToAdd.capQty;
+    }
+  }
+
   getData() {
     const data = [];
     const practiceGroups = this.getPracticeGroupList();
     forEach(practiceGroups, (group) => {
       const dataToAdd = this.getTotalForGroup(group);
-      data.push(dataToAdd);
+      console.log(dataToAdd);
+      if (this.shouldIAdd(dataToAdd)) {
+        data.push(dataToAdd);
+      }
     });
     return data;
   }
