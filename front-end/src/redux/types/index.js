@@ -10,6 +10,7 @@ export const GET_ORDERS = 'GET_ORDERS';
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const UPDATE_SIZE_ACTION = 'UPDATE_SIZE_ACTION';
 export const SUBMIT_ORDER = 'SUBMIT_ORDER';

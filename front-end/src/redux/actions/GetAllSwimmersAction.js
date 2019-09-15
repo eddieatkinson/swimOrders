@@ -1,14 +1,14 @@
-import { GET_SWIMMERS } from '../types';
+import { GET_ALL_SWIMMERS } from '../types';
 import axios from 'axios';
 
-export default async function (poolId) {
-  const url = `${window.apiHost}/getswimmers/${poolId}`;
+export default async function () {
+  const url = `${window.apiHost}/getallswimmers`;
   const axiosPromise = await axios.get(url)
     .catch((error) => {
       alert(error);
     });
   return {
-    type: GET_SWIMMERS,
+    type: GET_ALL_SWIMMERS,
     payload: axiosPromise.data,
   }
 }
