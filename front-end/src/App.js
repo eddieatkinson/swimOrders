@@ -87,7 +87,9 @@ class App extends Component {
     if (1) {
       main =
         <div>
-          <JumpStretchCaps />
+          <JumpStretchCaps itemId={19} />
+          <JumpStretchCaps itemId={20} />
+          <JumpStretchCaps itemId={15} />
           <Orders />
         </div>
     } else if (this.state.showLogin) {

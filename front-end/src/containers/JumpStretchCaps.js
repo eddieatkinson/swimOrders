@@ -1,64 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Table from 'react-bootstrap/Table';
-import MaterialTable from 'material-table';
 import { map, forEach, uniqBy, includes, find } from 'lodash';
 
 import GetOrdersAction from '../redux/actions/GetOrdersAction';
 import GetAllSwimmersAction from '../redux/actions/GetAllSwimmersAction';
-import GetPoolsAction from '../redux/actions/GetPoolsAction';
-import GetItemsAction from '../redux/actions/GetItemsAction';
-import { formatter } from '../utilities';
 import JumpStretchCapsItem from '../components/JumpStretchCapsItems';
 
 class JumpStretchCaps extends Component {
   componentDidMount() {
     this.props.GetOrdersAction();
     this.props.GetAllSwimmersAction();
-    // this.props.GetPoolsAction();
-    // this.props.GetItemsAction();
   }
-
-  // getItemPrice(itemId, sizeId, qty) {
-  //   let itemPrice = 0;
-  //   forEach(this.props.items, (item) => {
-  //     if(item.id === itemId) {
-  //       if(item.price === item.adultPrice || item.onlyAdult || sizeId < 4 || sizeId === 10) {
-  //         itemPrice = qty * item.price;
-  //       } else {
-  //         itemPrice = qty * item.adultPrice;
-  //       }
-  //     }
-  //   });
-  //   return itemPrice;
-  // }
-
-  // getOrderTotal(swimmerId) {
-  //   let orderTotal = 0;
-  //   forEach(this.props.orders, (order) => {
-  //     if(order.swimmerId === swimmerId) {
-  //       orderTotal += this.getItemPrice(order.itemId, order.sizeId, order.qty);
-  //     }
-  //   });
-  //   return orderTotal;
-  // }
-
-  // getTableContents() {
-  //   const tableContents = map(this.props.allSwimmers, (swimmer, i) => {
-  //     let poolName;
-  //     forEach(this.props.pools, (pool) => {
-  //       if(swimmer.poolId === pool.id) {
-  //         poolName = pool.name;
-  //       }
-  //     });
-  //     return ({
-  //       name: swimmer.name,
-  //       pool: poolName,
-  //       total: this.getOrderTotal(swimmer.id),
-  //     });
-  //   });
-  //   return tableContents;
-  // }
 
   getPracticeGroupList() {
     const practiceGroups = map(uniqBy(this.props.allSwimmers, 'groupName'), (group, i) => {
@@ -94,54 +46,135 @@ class JumpStretchCaps extends Component {
     return groupForSwimmer;
   }
 
+  getQuantities(order, quantityObj) {
+    if (this.props.itemId === 19) {
+      if (includes(order.special, 'Small')) {
+        quantityObj.small += order.qty;
+      } else if (includes(order.special, 'Medium')) {
+        quantityObj.medium += order.qty;
+      } else if (includes(order.special, 'Large')) {
+        quantityObj.large += order.qty;
+      }
+      return {
+        small: quantityObj.small,
+        medium: quantityObj.medium,
+        large: quantityObj.large,
+      }
+    } else if (this.props.itemId === 20) {
+      if (includes(order.color, 'Green')) {
+        quantityObj.green += order.qty;
+      } else if (includes(order.color, 'Red')) {
+        quantityObj.red += order.qty;
+      } else if (includes(order.color, 'Blue')) {
+        quantityObj.blue += order.qty;
+      } else if (includes(order.color, 'Black')) {
+        quantityObj.black += order.qty;
+      } else if (includes(order.color, 'Gray')) {
+        quantityObj.gray += order.qty;
+      }
+      return {
+        green: quantityObj.green,
+        red: quantityObj.red,
+        blue: quantityObj.blue,
+        black: quantityObj.black,
+        gray: quantityObj.gray,
+      }
+    } else if (this.props.itemId === 15) {
+      quantityObj.capQty += order.qty;
+      return {
+        capQty: quantityObj.capQty,
+      }
+    }
+  }
+
   getTotalForGroup(group) {
-    let smallTotal = 0;
-    let mediumTotal = 0;
-    let largeTotal = 0;
+    let quantityObj = {};
+    if (this.props.itemId === 19) {
+      quantityObj = {
+        small: 0,
+        medium: 0,
+        large: 0,
+      }
+    } else if (this.props.itemId === 20) {
+      quantityObj = {
+        green: 0,
+        red: 0,
+        blue: 0,
+        black: 0,
+        gray: 0,
+      }
+    } else if (this.props.itemId === 15) {
+      quantityObj = {
+        capQty: 0,
+      }
+    }
     forEach(this.props.orders, (order) => {
-      if (group.groupName === this.getGroupForSwimmer(order.swimmerId) && order.itemId === 19 && order.deleted === 0) {
-        if (includes(order.special, 'Small')) {
-          smallTotal += order.qty;
-        } else if (includes(order.special, 'Medium')) {
-          mediumTotal += order.qty;
-        } else if (includes(order.special, 'Large')) {
-          largeTotal += order.qty;
-        }
+      if (group.groupName === this.getGroupForSwimmer(order.swimmerId) && order.itemId === this.props.itemId && order.deleted === 0) {
+        this.getQuantities(order, quantityObj);
       }
     });
     const totalForGroup = {
+      ...quantityObj,
       name: group.pool,
       group: group.groupName,
-      small: smallTotal,
-      medium: mediumTotal,
-      large: largeTotal,
     }
     return totalForGroup;
   }
 
-  getJumpRopeData() {
+  getData() {
     const data = [];
     const practiceGroups = this.getPracticeGroupList();
     forEach(practiceGroups, (group) => {
-      const jumpRopeData = this.getTotalForGroup(group);
-      data.push(jumpRopeData);
+      const dataToAdd = this.getTotalForGroup(group);
+      data.push(dataToAdd);
     });
     return data;
   }
 
+  getColumns() {
+    let title, columns;
+    if (this.props.itemId === 19) {
+      title = 'Jump Ropes';
+      columns = [
+        { title: 'Pool', field: 'name' },
+        { title: 'Practice Group', field: 'group' },
+        { title: 'Small - Red/White', field: 'small', type: 'numeric' },
+        { title: 'Medium - Black/White', field: 'medium', type: 'numeric' }, 
+        { title: 'Large - Black/Red', field: 'large', type: 'numeric' },
+      ];
+    } else if (this.props.itemId === 20) {
+      title = 'Stretch Cords'
+      columns = [
+        { title: 'Pool', field: 'name' },
+        { title: 'Practice Group', field: 'group' },
+        { title: 'Green', field: 'green', type: 'numeric' },
+        { title: 'Red', field: 'red', type: 'numeric' }, 
+        { title: 'Blue', field: 'blue', type: 'numeric' },
+        { title: 'Black', field: 'black', type: 'numeric' },
+        { title: 'Gray', field: 'gray', type: 'numeric' },
+      ];
+    } else if (this.props.itemId === 15) {
+      title = 'Latex Meet Caps';
+      columns = [
+        { title: 'Pool', field: 'name' },
+        { title: 'Practice Group', field: 'group' },
+        { title: 'Qty', field: 'capQty', type: 'numeric' },
+      ];
+    }
+    return ([
+      columns,
+      title,
+    ]);
+  }
+
   render() {
+    const columnsAndTitle = this.getColumns();
     return (
       <div>
         <JumpStretchCapsItem
-          columns={[
-            { title: 'Pool', field: 'name' },
-            { title: 'Practice Group', field: 'group' },
-            { title: 'Small - Red/White', field: 'small', type: 'numeric' },
-            { title: 'Medium - Black/White', field: 'medium', type: 'numeric' }, 
-            { title: 'Large - Black/Red', field: 'large', type: 'numeric' }
-          ]}
-          title='Jump Ropes'
-          data={this.getJumpRopeData()}
+          columns={columnsAndTitle[0]}
+          title={columnsAndTitle[1]}
+          data={this.getData()}
         />
       </div>
     );
@@ -158,6 +191,4 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   GetOrdersAction,
   GetAllSwimmersAction,
-  // GetPoolsAction,
-  // GetItemsAction,
 })(JumpStretchCaps);
