@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER } from "../types";
+import { REGISTER_USER, LOGIN_USER, LOGOUT_USER } from "../types";
 
 const INITIAL_STATE = {
   loading: false,
@@ -17,6 +17,8 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_USER:
       return {...state}
     case LOGIN_USER:
+      return {...state, message: action.payload}
+    case LOGOUT_USER:
       return {...state, message: action.payload}
     default:
       return state;
