@@ -14,6 +14,11 @@ const JumpStretchCapsItem = (props) => {
           // pageSize: 10,
           // pageSizeOptions: [10, 25, 50],
         }}
+        detailPanel={rowData => {
+          return (
+            <div>Hello</div>
+          )
+        }}
         // actions={[
         //   {
         //     icon: 'save',
@@ -21,7 +26,7 @@ const JumpStretchCapsItem = (props) => {
         //   }
         // ]}
         // onRowClick={(e) => console.log(e.currentTarget.children[2].innerHTML)}
-        // onRowClick={(event, rowData, togglePanel) => togglePanel()}
+        onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
     </div>
   );
