@@ -233,6 +233,7 @@ class JumpStretchCaps extends Component {
           columns={columnsAndTitle[0]}
           title={columnsAndTitle[1]}
           data={data}
+          swimmerData={swimmerData}
         />
       </div>
     );
