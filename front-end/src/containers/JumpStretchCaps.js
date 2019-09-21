@@ -87,7 +87,7 @@ class JumpStretchCaps extends Component {
     }
   }
 
-  getTotalForGroup(group) {
+  getQuantityObject() {
     let quantityObj = {};
     if (this.props.itemId === 19) {
       quantityObj = {
@@ -108,6 +108,11 @@ class JumpStretchCaps extends Component {
         capQty: 0,
       }
     }
+    return quantityObj;
+  }
+
+  getTotalForGroup(group) {
+    const quantityObj = this.getQuantityObject();
     forEach(this.props.orders, (order) => {
       if (group.groupName === this.getGroupForSwimmer(order.swimmerId) && order.itemId === this.props.itemId && order.deleted === 0) {
         this.getQuantities(order, quantityObj);
@@ -121,12 +126,24 @@ class JumpStretchCaps extends Component {
     return totalForGroup;
   }
 
+  shouldIAdd(dataToAdd) {
+    if (this.props.itemId === 19) {
+      return dataToAdd.small || dataToAdd.medium || dataToAdd.large;
+    } else if (this.props.itemId === 20) {
+      return dataToAdd.green || dataToAdd.red || dataToAdd.blue || dataToAdd.black || dataToAdd.gray;
+    } else if (this.props.itemId === 15) {
+      return dataToAdd.capQty;
+    }
+  }
+
   getData() {
     const data = [];
     const practiceGroups = this.getPracticeGroupList();
     forEach(practiceGroups, (group) => {
       const dataToAdd = this.getTotalForGroup(group);
-      data.push(dataToAdd);
+      if (this.shouldIAdd(dataToAdd)) {
+        data.push(dataToAdd);
+      }
     });
     return data;
   }
@@ -167,14 +184,56 @@ class JumpStretchCaps extends Component {
     ]);
   }
 
+  getTotalForEachSwimmer(swimmer, quantityObj) {
+    forEach(this.props.orders, (order) => {
+      if (order.swimmerId === swimmer.id && order.itemId === this.props.itemId && !order.deleted) {
+        this.getQuantities(order, quantityObj);
+      }
+    });
+    const totalForSwimmer = {
+      ...quantityObj,
+      name: swimmer.name,
+      groupName: swimmer.groupName,
+    }
+    return totalForSwimmer;
+  }
+
+  getOrdersForGroup(groupName) {
+    const { allSwimmers, orders } = this.props;
+    const data = [];
+    forEach(allSwimmers, (swimmer) => {
+      const quantityObj = this.getQuantityObject();
+      if (find(orders, ['swimmerId', swimmer.id]) && swimmer.groupName === groupName) {
+        const dataToAdd = this.getTotalForEachSwimmer(swimmer, quantityObj);
+        if (this.shouldIAdd(dataToAdd)) {
+          data.push(dataToAdd);
+        }
+      }
+    });
+    return data;
+  }
+
+  getSwimmerData(data) {
+    const swimmerData = [];
+    forEach(data, (group) => {
+      const dataForGroup = this.getOrdersForGroup(group.group);
+      swimmerData.push(dataForGroup);
+    });
+    return swimmerData;
+  }
+
   render() {
     const columnsAndTitle = this.getColumns();
+    const data = this.getData();
+    const swimmerData = this.getSwimmerData(data);
+    console.log(swimmerData);
     return (
       <div>
         <JumpStretchCapsItem
           columns={columnsAndTitle[0]}
           title={columnsAndTitle[1]}
-          data={this.getData()}
+          data={data}
+          swimmerData={swimmerData}
         />
       </div>
     );
