@@ -8,7 +8,7 @@ import { map, findIndex, find } from 'lodash';
 import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetPoolAction from '../redux/actions/GetPoolAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
-import GetSwimmersAction from '../redux/actions/GetAllSwimmersAction';
+import GetSwimmersAction from '../redux/actions/GetSwimmersAction';
 import GetGroupAction from '../redux/actions/GetGroupAction';
 import GetSizeAction from '../redux/actions/GetSizeAction';
 import UpdateSizeAction from '../redux/actions/UpdateSizeAction';
