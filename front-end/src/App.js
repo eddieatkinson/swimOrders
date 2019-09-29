@@ -92,8 +92,8 @@ class App extends Component {
     const now = moment();
     const isAfterTime = now.isSameOrAfter('2019-09-07');
     let main;
-    // if (this.props.message === signInSuccess) {
-    if (1) {
+    if (this.props.message === signInSuccess) {
+    // if (1) {
       main =
         <div>
           <JumpStretchCaps itemId={19} />
@@ -132,7 +132,6 @@ class App extends Component {
   render() {
     const now = moment();
     const isAfterTime = now.isSameOrAfter('2019-09-07');
-
     return (
       <div>
         <div className='top-fields'>

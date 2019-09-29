@@ -5,7 +5,7 @@ A merchandise ordering website for our local swim club (~700 swimmers).
 [SwimOrders GitHub](https://www.github.com/eddieatkinson/swimOrders)
 
 ## Live Site
-[SwimOrders](https://swimorders.eddiebatkinson.com)
+[SwimOrders](https://goldswim.eddiebatkinson.com)
 
 ## Technologies used:
 **Languages**
@@ -166,3 +166,14 @@ router.post('/submitorder', (req, res) => {
   });
 });
 ```
+## Screenshots
+Choosing swimmer:
+![Swimmer Dropdown](front-end/src/assets/SwimmerDropDown.png)
+Ordering items:
+![Ordering Page](front-end/src/assets/OrderingPage.png)
+Confirmation page:
+![Confirmation Page](front-end/src/assets/ConfirmationPage.png)
+Login for administrator:
+![Login Screen](front-end/src/assets/LoginScreen.png)
+Ordering data:
+![Order Data](front-end/src/assets/OrderData.png)
