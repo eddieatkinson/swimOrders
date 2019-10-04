@@ -47,7 +47,6 @@ const OrdersPDF = (props) => {
     });
     return orderInfo;
   }
-  console.log(props);
   const getPage = () => {
     const page = [];
     forEach(props.orders, (order, i) => {

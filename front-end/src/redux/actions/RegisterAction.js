@@ -2,7 +2,6 @@ import { REGISTER_USER } from '../types';
 import axios from 'axios';
 
 export default async function (userInfo) {
-  console.log(userInfo);
   const axiosPromise = await axios({
     url: `${window.apiHost}/registeruser`,
     method: 'POST',
