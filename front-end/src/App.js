@@ -17,6 +17,7 @@ import Login from './containers/Login';
 import { secretName, signInSuccess } from './utilities';
 
 import tooLateGif from './assets/tooLateGif.gif';
+import OrdersPDF from './components/OrdersPDF';
 
 class App extends Component {
   state = {
