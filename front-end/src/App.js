@@ -17,6 +17,7 @@ import Login from './containers/Login';
 import { secretName, signInSuccess } from './utilities';
 
 import tooLateGif from './assets/tooLateGif.gif';
+import OrdersPDF from './components/OrdersPDF';
 
 class App extends Component {
   state = {
@@ -92,8 +93,8 @@ class App extends Component {
     const now = moment();
     const isAfterTime = now.isSameOrAfter('2019-09-07');
     let main;
-    if (this.props.message === signInSuccess) {
-    // if (1) {
+    // if (this.props.message === signInSuccess) {
+    if (1) {
       main =
         <div>
           <JumpStretchCaps itemId={19} />

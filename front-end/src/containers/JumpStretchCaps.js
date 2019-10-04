@@ -226,7 +226,6 @@ class JumpStretchCaps extends Component {
     const columnsAndTitle = this.getColumns();
     const data = this.getData();
     const swimmerData = this.getSwimmerData(data);
-    console.log(swimmerData);
     return (
       <div>
         <JumpStretchCapsItem
