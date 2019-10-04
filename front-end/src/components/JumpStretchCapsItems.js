@@ -54,14 +54,14 @@ const JumpStretchCapsItem = (props) => {
         options={{
           search: true,
         }}
-        detailPanel={rowData => {
-          return (
-            <div style={{height: '100px'}}>
-              {getDetailPanelContents(swimmerData[rowData.tableData.id])}
-            </div>
-          )
-        }}
-        onRowClick={(event, rowData, togglePanel) => togglePanel()}
+        // detailPanel={rowData => {
+        //   return (
+        //     <div style={{height: '100px'}}>
+        //       {getDetailPanelContents(swimmerData[rowData.tableData.id])}
+        //     </div>
+        //   )
+        // }}
+        // onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
     </div>
   );
