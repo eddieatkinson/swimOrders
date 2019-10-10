@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MaterialTable from 'material-table';
-import { isEmpty, forEach, find } from 'lodash';
+import { isEmpty, forEach, find, sortBy } from 'lodash';
 
 import GetOrdersAction from '../redux/actions/GetOrdersAction';
 import GetAllSwimmersAction from '../redux/actions/GetAllSwimmersAction';
@@ -115,7 +115,8 @@ class Orders extends Component {
       //   total: this.getOrderTotal(swimmer.id),
       // });
     });
-    return tableContents;
+    const sortedTableContents = sortBy(tableContents, ['last']);
+    return sortedTableContents;
   }
 
   getPDFs() {
