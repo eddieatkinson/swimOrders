@@ -78,7 +78,8 @@ router.get('/getswimmers/:poolId', (req, res) => {
   console.log('Getting swimmers...');
   const { poolId } = req.params;
   const selectionQuery = `SELECT * FROM swimmers
-    WHERE poolId = ?;`;
+    WHERE poolId = ?
+    ORDER BY lastName;`;
   connection.query(selectionQuery, [poolId], (error, results) => {
     if (error) {
       throw error;
