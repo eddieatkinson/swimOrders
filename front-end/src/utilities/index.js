@@ -10,3 +10,5 @@ export const secretName = 'login';
 export const badLogin = 'badLogin';
 export const badPassword = 'badPassword';
 export const signInSuccess = 'signInSuccess';
+
+export const closingDate = '2019-10-15';
