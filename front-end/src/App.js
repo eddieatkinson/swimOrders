@@ -115,7 +115,7 @@ class App extends Component {
       main =
         <div>
           <div>
-            <img className='too-late' src={tooBadGif} alt='too late' />
+            <img className='too-late' src={tooLateGif} alt='too late' />
           </div>
       </div>;
     } else {
