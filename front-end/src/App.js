@@ -14,9 +14,10 @@ import Orders from './containers/Orders';
 import JumpStretchCaps from './containers/JumpStretchCaps';
 import Login from './containers/Login';
 
-import { secretName, signInSuccess } from './utilities';
+import { secretName, signInSuccess, closingDate } from './utilities';
 
 import tooLateGif from './assets/tooLateGif.gif';
+import tooBadGif from './assets/tooBadGif.gif';
 import OrdersPDF from './components/OrdersPDF';
 
 class App extends Component {
@@ -91,7 +92,7 @@ class App extends Component {
 
   getMain() {
     const now = moment();
-    const isAfterTime = now.isSameOrAfter('3019-09-07');
+    const isAfterTime = now.isSameOrAfter(closingDate);
     let main;
     if (this.props.message === signInSuccess) {
     // if (1) {
@@ -114,7 +115,7 @@ class App extends Component {
       main =
         <div>
           <div>
-            <img className='too-late' src={tooLateGif} alt='too late' />
+            <img className='too-late' src={tooBadGif} alt='too late' />
           </div>
       </div>;
     } else {
@@ -132,7 +133,7 @@ class App extends Component {
 
   render() {
     const now = moment();
-    const isAfterTime = now.isSameOrAfter('3019-09-07');
+    const isAfterTime = now.isSameOrAfter(closingDate);
     return (
       <div>
         <div className='top-fields'>
