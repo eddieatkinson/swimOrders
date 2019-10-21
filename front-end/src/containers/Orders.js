@@ -9,6 +9,7 @@ import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import OrdersPDF from '../components/OrdersPDF';
+import { firstOrderId } from '../utilities';
 
 class Orders extends Component {
   componentDidMount() {
@@ -36,7 +37,7 @@ class Orders extends Component {
   getOrderTotal(swimmerId) {
     let orderTotal = 0;
     forEach(this.props.orders, (order) => {
-      if(order.deleted === 0 && order.swimmerId === swimmerId && swimmerId !== 1) { // not Ella
+      if(order.deleted === 0 && order.swimmerId === swimmerId && swimmerId !== 1 && order.id > firstOrderId) { // not Ella and only newer orders
         orderTotal += this.getItemPrice(order.itemId, order.sizeId, order.qty);
       }
     });
