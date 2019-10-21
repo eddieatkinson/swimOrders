@@ -14,7 +14,7 @@ import Orders from './containers/Orders';
 import JumpStretchCaps from './containers/JumpStretchCaps';
 import Login from './containers/Login';
 
-import { secretName, signInSuccess, closingDate } from './utilities';
+import { secretName, signInSuccess, closingDate, secretOpen } from './utilities';
 
 import tooLateGif from './assets/tooLateGif.gif';
 import tooBadGif from './assets/tooBadGif.gif';
@@ -33,6 +33,7 @@ class App extends Component {
     submitted: false,
     keystrokes: '',
     showLogin: false,
+    overrideClosed: false,
   }
 
   detectKeys(event) {
@@ -45,6 +46,11 @@ class App extends Component {
       this.setState({
         keystrokes: '',
         showLogin: true,
+      });
+    } else if (this.state.keystrokes.toLowerCase().includes(secretOpen)) {
+      this.setState({
+        keystrokes: '',
+        overrideClosed: true,
       });
     }
   }
@@ -111,7 +117,7 @@ class App extends Component {
         <div>
           <Login />
         </div>;
-    } else if (isAfterTime) {
+    } else if (isAfterTime && !this.state.overrideClosed) {
       main =
         <div>
           <div>
@@ -138,7 +144,7 @@ class App extends Component {
       <div>
         <div className='top-fields'>
           <Navbar />
-          {!isAfterTime && !this.props.isLoggedIn && !this.state.showLogin && <PoolSwimmer />}
+          {(!isAfterTime || this.state.overrideClosed) && !this.props.isLoggedIn && !this.state.showLogin && <PoolSwimmer />}
         </div>
         {this.getMain()}
       </div>

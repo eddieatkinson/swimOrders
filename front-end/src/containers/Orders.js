@@ -36,7 +36,7 @@ class Orders extends Component {
   getOrderTotal(swimmerId) {
     let orderTotal = 0;
     forEach(this.props.orders, (order) => {
-      if(order.deleted === 0 && order.swimmerId === swimmerId) {
+      if(order.deleted === 0 && order.swimmerId === swimmerId && swimmerId !== 1) { // not Ella
         orderTotal += this.getItemPrice(order.itemId, order.sizeId, order.qty);
       }
     });
@@ -88,7 +88,7 @@ class Orders extends Component {
         }
       });
       const total = this.getOrderTotal(swimmer.id);
-      if (total) {
+      if (total || swimmer.id === 1) {
         if (isForThePDF) {
           tableContents.push({
             swimmerId: swimmer.id,
