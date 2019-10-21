@@ -104,9 +104,9 @@ class App extends Component {
     // if (1) {
       main =
         <div>
-          <JumpStretchCaps itemId={19} />
+          {/* <JumpStretchCaps itemId={19} />
           <JumpStretchCaps itemId={20} />
-          <JumpStretchCaps itemId={15} />
+          <JumpStretchCaps itemId={15} /> */}
           <Orders />
           <div className='submit-button'>
             <Button variant='danger' onClick={this.handleLogout.bind(this)}>Logout</Button>
