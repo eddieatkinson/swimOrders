@@ -9,7 +9,7 @@ import GetPoolsAction from '../redux/actions/GetPoolsAction';
 import GetItemsAction from '../redux/actions/GetItemsAction';
 import GetSizesAction from '../redux/actions/GetSizesAction';
 import OrdersPDF from '../components/OrdersPDF';
-import { firstOrderId } from '../utilities';
+import { firstOrderId, firstSwimmerId } from '../utilities';
 
 class Orders extends Component {
   componentDidMount() {
@@ -79,7 +79,19 @@ class Orders extends Component {
     return orderDetails;
   }
 
-  getTableContents(isForThePDF) {
+  getFreeShirtDetails(swimmerId, usedSizeId) {
+    const freeShirtDetails = [];
+    if(swimmerId >= firstSwimmerId) {
+      freeShirtDetails.push({
+        itemName: 'TEAM T-SHIRT',
+        qty: 1,
+        size: this.getSizeName(usedSizeId),
+      });
+    }
+    return freeShirtDetails;
+  }
+
+  getTableContents(isForThePDF, isForTheFreeShirt) {
     const tableContents = []
     forEach(this.props.allSwimmers, (swimmer, i) => {
       let poolName;
@@ -99,6 +111,15 @@ class Orders extends Component {
             poolId: swimmer.poolId,
             total,
             orderDetails: this.getOrderDetails(swimmer.id),
+          });
+        } else if (isForTheFreeShirt && swimmer.id >= firstSwimmerId) {
+          tableContents.push({
+            swimmerId: swimmer.id,
+            first: swimmer.firstName,
+            last: swimmer.lastName,
+            pool: poolName,
+            poolId: swimmer.poolId,
+            orderDetails: this.getFreeShirtDetails(swimmer.id, swimmer.usedSizeId),
           });
         } else {
           tableContents.push({
@@ -120,9 +141,9 @@ class Orders extends Component {
     return sortedTableContents;
   }
 
-  getPDFs() {
+  getPDFs(type) {
     const pdfs = [];
-    const orders = this.getTableContents(true);
+    const orders = type === 'orders' ? this.getTableContents(true) : this.getTableContents(false, true);
     forEach(this.props.pools, (pool, i) => {
       if (!isEmpty(orders) && pool && find(orders, ['poolId', pool.id])) {
         pdfs.push(
@@ -153,7 +174,12 @@ class Orders extends Component {
         />
         <div style={{marginTop: 10}}>
           {
-            !isEmpty(this.props.pools) && this.getPDFs()
+            !isEmpty(this.props.pools) && this.getPDFs('orders')
+          }
+        </div>
+        <div style={{marginTop: 10}}>
+          {
+            this.getPDFs()
           }
         </div>
       </div>
