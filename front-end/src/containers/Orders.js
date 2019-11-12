@@ -37,7 +37,7 @@ class Orders extends Component {
   getOrderTotal(swimmerId) {
     let orderTotal = 0;
     forEach(this.props.orders, (order) => {
-      if(order.deleted === 0 && order.swimmerId === swimmerId && swimmerId !== 1 && order.id > firstOrderId) { // not Ella and only newer orders
+      if(order.deleted === 0 && order.swimmerId === swimmerId && swimmerId !== 1 && order.id >= firstOrderId) { // not Ella and only newer orders
         orderTotal += this.getItemPrice(order.itemId, order.sizeId, order.qty);
       }
     });
@@ -57,7 +57,7 @@ class Orders extends Component {
   getOrderDetails(swimmerId) {
     const orderDetails = [];
     forEach(this.props.orders, (order) => {
-      if(order.swimmerId === swimmerId) {
+      if(order.swimmerId === swimmerId && !order.deleted && order.id >= firstOrderId) {
         let itemsObject = {
           itemName: this.getItemName(order.itemId),
           qty: order.qty,
@@ -177,11 +177,11 @@ class Orders extends Component {
             !isEmpty(this.props.pools) && this.getPDFs('orders')
           }
         </div>
-        <div style={{marginTop: 10}}>
+        {/* <div style={{marginTop: 10}}>
           {
             this.getPDFs()
           }
-        </div>
+        </div> */}
       </div>
     );
   }
