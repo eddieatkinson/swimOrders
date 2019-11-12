@@ -57,7 +57,7 @@ class Orders extends Component {
   getOrderDetails(swimmerId) {
     const orderDetails = [];
     forEach(this.props.orders, (order) => {
-      if(order.swimmerId === swimmerId) {
+      if(order.swimmerId === swimmerId && !order.deleted) {
         let itemsObject = {
           itemName: this.getItemName(order.itemId),
           qty: order.qty,
@@ -177,11 +177,11 @@ class Orders extends Component {
             !isEmpty(this.props.pools) && this.getPDFs('orders')
           }
         </div>
-        <div style={{marginTop: 10}}>
+        {/* <div style={{marginTop: 10}}>
           {
             this.getPDFs()
           }
-        </div>
+        </div> */}
       </div>
     );
   }
