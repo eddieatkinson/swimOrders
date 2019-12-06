@@ -10,14 +10,15 @@ A merchandise ordering website for our local swim club (~700 swimmers).
 ## Technologies used:
 **Languages**
 * JavaScript
+* Node
 * CSS
 
 **Frameworks**
 * React
+* Express
 
 **Other:**
 * Redux (state management)
-* Express (Node on the back end)
 * MySQL database
 
 ## Code Snippets
